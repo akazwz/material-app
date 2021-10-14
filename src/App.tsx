@@ -1,11 +1,11 @@
 import React from 'react';
 import './App.css';
-import {SighInSide} from "./pages/SighInSide";
+import SignInSide from "./pages/SighInSide";
 
 function App() {
     return (
         <React.Fragment>
-            <SighInSide/>
+            <SignInSide/>
         </React.Fragment>
     );
 }
