@@ -4,6 +4,7 @@ import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
 import FormControlLabel from '@mui/material/FormControlLabel';
+import FormControl, {useFormControl} from '@mui/material/FormControl';
 import Checkbox from '@mui/material/Checkbox';
 import Link from '@mui/material/Link';
 import Paper from '@mui/material/Paper';
@@ -13,20 +14,47 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import {createTheme, ThemeProvider} from '@mui/material/styles';
 import Copyright from '../components/Copyright';
+import {ChangeEvent, SyntheticEvent, useState} from "react";
+import InputAdornment from '@mui/material/InputAdornment';
 
 const theme = createTheme();
 
 const SignInSide = () => {
+    const [phoneError, setPhoneError] = useState(false);
+    const [pwdError, setPwdError] = useState(false);
+    const [phone, setPhone] = useState('');
+
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
         // eslint-disable-next-line no-console
         console.log({
-            email: data.get('email'),
-            password: data.get('phone'),
+            email: data.get('phone'),
+            password: data.get('password'),
         });
     };
 
+    const handlePhoneOnBlur = () => {
+        let reg = /^1[3456789]\d{9}$/;
+        if (phone === '') {
+            setPhoneError(false);
+            return;
+        }
+        if (reg.test(phone)) {
+            setPhoneError(false);
+        } else {
+            setPhoneError(true);
+        }
+    }
+
+    const handlePhoneChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const value = event.target.value;
+        if (!isNaN(Number(value))) {
+            setPhone(value);
+        } else {
+            setPhoneError(true);
+        }
+    }
     return (
         <ThemeProvider theme={theme}>
             <Grid container component='main' sx={{height: '100vh'}}>
@@ -78,8 +106,15 @@ const SignInSide = () => {
                                 id='phone'
                                 label='Phone Number'
                                 name='phone'
-                                autoComplete='tel'
+                                autoComplete='off'
                                 autoFocus
+                                InputProps={{
+                                    startAdornment: <InputAdornment position='start'>+86</InputAdornment>,
+                                }}
+                                error={phoneError}
+                                onBlur={handlePhoneOnBlur}
+                                value={phone}
+                                onChange={handlePhoneChange}
                             />
                             <TextField
                                 margin='normal'
@@ -90,6 +125,7 @@ const SignInSide = () => {
                                 type='password'
                                 id='password'
                                 autoComplete='current-password'
+                                error={pwdError}
                             />
                             <FormControlLabel
                                 control={<Checkbox value='remember' color='primary'/>}
