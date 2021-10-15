@@ -23,6 +23,7 @@ const SignInSide = () => {
     const [phoneError, setPhoneError] = useState(false);
     const [pwdError, setPwdError] = useState(false);
     const [phone, setPhone] = useState('');
+    const [phoneHelper, setPhoneHelper] = useState('');
 
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
@@ -37,22 +38,31 @@ const SignInSide = () => {
     const handlePhoneOnBlur = () => {
         let reg = /^1[3456789]\d{9}$/;
         if (phone === '') {
+            setPhoneHelper('');
             setPhoneError(false);
             return;
         }
         if (reg.test(phone)) {
+            setPhoneHelper('');
             setPhoneError(false);
         } else {
             setPhoneError(true);
+            setPhoneHelper('Please Input The Right Phone Number.');
         }
     }
 
     const handlePhoneChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const value = event.target.value;
+        if (value.length > 11) {
+            return;
+        }
         if (!isNaN(Number(value))) {
+            setPhoneHelper('');
+            setPhoneError(false);
             setPhone(value);
         } else {
             setPhoneError(true);
+            setPhoneHelper('Only Number.');
         }
     }
     return (
@@ -112,6 +122,7 @@ const SignInSide = () => {
                                     startAdornment: <InputAdornment position='start'>+86</InputAdornment>,
                                 }}
                                 error={phoneError}
+                                helperText={phoneHelper}
                                 onBlur={handlePhoneOnBlur}
                                 value={phone}
                                 onChange={handlePhoneChange}
