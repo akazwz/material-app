@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import Link from '@mui/material/Link';
 import Paper from '@mui/material/Paper';
 import Box from '@mui/material/Box';
@@ -17,6 +17,8 @@ import TextField from '@mui/material/TextField';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
 import Copyright from '../components/Copyright';
+import {useAppDispatch} from '../hooks/hooks';
+
 
 const SignInSide = () => {
     const {t} = useTranslation();
@@ -28,6 +30,7 @@ const SignInSide = () => {
     const [pwdHelper, setPwdHelper] = useState('');
     const [showPassword, setShowPassword] = useState(false);
 
+    const dispatch = useAppDispatch();
     // submit
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
@@ -104,7 +107,6 @@ const SignInSide = () => {
         }
     }
 
-
     // toggle show password
     const handleToggleShowPassword = () => {
         setShowPassword(!showPassword);
@@ -114,123 +116,128 @@ const SignInSide = () => {
         event.preventDefault();
     };
 
+    const GridImg = (props: any) => {
+        return (
+            <Grid
+                item
+                xs={false}
+                sm={4}
+                md={7}
+                sx={{
+                    backgroundImage: 'url(' + props.url + ')',
+                    backgroundRepeat: 'no-repeat',
+                    backgroundColor: (t) =>
+                        t.palette.mode === 'light' ? t.palette.grey[50] : t.palette.grey[900],
+                    backgroundSize: 'cover',
+                    backgroundPosition: 'center',
+                }}
+            />
+        );
+    }
+
     return (
-            <Grid container component='main' sx={{height: '100vh'}}>
-                <CssBaseline/>
-                {/*side image*/}
-                <Grid
-                    item
-                    xs={false}
-                    sm={4}
-                    md={7}
+        <Grid container component='main' sx={{height: '100vh'}}>
+            <CssBaseline/>
+            {/*side image*/}
+            <GridImg url='https://source.unsplash.com/random'/>
+            <Grid
+                item
+                xs={12}
+                sm={8}
+                md={5}
+                component={Paper}
+                elevation={6}
+                square
+            >
+                <Box
                     sx={{
-                        backgroundImage: 'url(https://source.unsplash.com/random)',
-                        backgroundRepeat: 'no-repeat',
-                        backgroundColor: (t) =>
-                            t.palette.mode === 'light' ? t.palette.grey[50] : t.palette.grey[900],
-                        backgroundSize: 'cover',
-                        backgroundPosition: 'center',
+                        my: 8,
+                        mx: 4,
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'center',
                     }}
-                />
-                <Grid
-                    item
-                    xs={12}
-                    sm={8}
-                    md={5}
-                    component={Paper}
-                    elevation={6}
-                    square
                 >
-                    <Box
-                        sx={{
-                            my: 8,
-                            mx: 4,
-                            display: 'flex',
-                            flexDirection: 'column',
-                            alignItems: 'center',
-                        }}
-                    >
-                        <Avatar sx={{m: 1, bgcolor: 'secondary.main'}}>
-                            <LockOutlinedIcon/>
-                        </Avatar>
-                        <Typography component='h1' variant='h5'>
-                            {t('signInSide.signIn')}
-                        </Typography>
-                        <Box component='form' noValidate onSubmit={handleSubmit} sx={{mt: 1}}>
-                            <TextField
-                                margin='normal'
-                                required
-                                fullWidth
-                                id='phone'
-                                label={t('signInSide.phoneNumber')}
-                                name='phone'
-                                autoComplete='off'
-                                autoFocus
-                                InputProps={{
-                                    startAdornment: <InputAdornment position='start'>+86</InputAdornment>,
-                                }}
-                                error={phoneError}
-                                helperText={phoneHelper}
-                                onBlur={handlePhoneOnBlur}
-                                value={phone}
-                                onChange={handlePhoneChange}
-                            />
-                            <TextField
-                                margin='normal'
-                                required
-                                fullWidth
-                                name='password'
-                                label={t('signInSide.password')}
-                                type={showPassword ? 'text' : 'password'}
-                                id='password'
-                                autoComplete='off'
-                                InputProps={{
-                                    endAdornment: <InputAdornment position='end'>
-                                        <IconButton
-                                            aria-label='toggle password visibility'
-                                            onClick={handleToggleShowPassword}
-                                            onMouseDown={handleMouseDownPassword}
-                                        >
-                                            {password.length > 1 ? showPassword ? <VisibilityOff/> :
-                                                <VisibilityIcon/> : null}
-                                        </IconButton>
-                                    </InputAdornment>,
-                                }}
-                                error={pwdError}
-                                helperText={pwdHelper}
-                                onBlur={handlePwdOnBlur}
-                                value={password}
-                                onChange={handlePwdChange}
-                            />
-                            <FormControlLabel
-                                control={<Checkbox value='remember' color='primary'/>}
-                                label={t('signInSide.rememberMe')}
-                            />
-                            <Button
-                                type='submit'
-                                fullWidth
-                                variant='contained'
-                                sx={{mt: 3, mb: 2}}
-                            >
-                                {t('signInSide.signInBtn')}
-                            </Button>
-                            <Grid container>
-                                <Grid item xs>
-                                    <Link href='#' variant='body2'>
-                                        {t('signInSide.forgotPwd')}
-                                    </Link>
-                                </Grid>
-                                <Grid item>
-                                    <Link href='#' variant='body2'>
-                                        {t('signInSide.toSignUp')}
-                                    </Link>
-                                </Grid>
+                    <Avatar sx={{m: 1, bgcolor: 'secondary.main'}}>
+                        <LockOutlinedIcon/>
+                    </Avatar>
+                    <Typography component='h1' variant='h5'>
+                        {t('signInSide.signIn')}
+                    </Typography>
+                    <Box component='form' noValidate onSubmit={handleSubmit} sx={{mt: 1}}>
+                        <TextField
+                            margin='normal'
+                            required
+                            fullWidth
+                            id='phone'
+                            label={t('signInSide.phoneNumber')}
+                            name='phone'
+                            autoComplete='off'
+                            InputProps={{
+                                startAdornment: <InputAdornment position='start'>+86</InputAdornment>,
+                            }}
+                            error={phoneError}
+                            helperText={phoneHelper}
+                            onBlur={handlePhoneOnBlur}
+                            value={phone}
+                            onChange={handlePhoneChange}
+                        />
+                        <TextField
+                            margin='normal'
+                            required
+                            fullWidth
+                            name='password'
+                            label={t('signInSide.password')}
+                            type={showPassword ? 'text' : 'password'}
+                            id='password'
+                            autoComplete='off'
+                            InputProps={{
+                                endAdornment: <InputAdornment position='end'>
+                                    <IconButton
+                                        aria-label='toggle password visibility'
+                                        onClick={handleToggleShowPassword}
+                                        onMouseDown={handleMouseDownPassword}
+                                    >
+                                        {password.length > 1 ? showPassword ? <VisibilityOff/> :
+                                            <VisibilityIcon/> : null}
+                                    </IconButton>
+                                </InputAdornment>,
+                            }}
+                            error={pwdError}
+                            helperText={pwdHelper}
+                            onBlur={handlePwdOnBlur}
+                            value={password}
+                            onChange={handlePwdChange}
+                        />
+                        <FormControlLabel
+                            control={<Checkbox value='remember' color='primary'/>}
+                            label={t('signInSide.rememberMe')}
+                        />
+                        <Button
+                            type='submit'
+                            fullWidth
+                            variant='contained'
+                            sx={{mt: 3, mb: 2}}
+                        >
+                            {t('signInSide.signInBtn')}
+                        </Button>
+                        <Grid container>
+                            <Grid item xs>
+                                <Link href='#' variant='body2'>
+                                    {t('signInSide.forgotPwd')}
+                                </Link>
                             </Grid>
-                            <Copyright sx={{mt: 5}}/>
-                        </Box>
+                            <Grid item>
+                                <Link href='#' variant='body2'>
+                                    {t('signInSide.toSignUp')}
+                                </Link>
+                            </Grid>
+                        </Grid>
+                        <Copyright sx={{mt: 5}}/>
                     </Box>
-                </Grid>
+                </Box>
             </Grid>
+        </Grid>
     );
 }
 

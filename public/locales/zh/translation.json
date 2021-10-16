@@ -14,11 +14,11 @@
     "pwdHelperPattern": "密码必须同时包含字母和数字",
     "pwdHelperNull": "密码不能为空"
   },
-  "FabSettings": {
+  "fabSettings": {
     "settings": "设置",
     "theme": "主题",
-    "light": "明亮模式",
-    "dark": "黑暗模式",
+    "light": "浅色",
+    "dark": "深色",
     "languages": "语言"
   }
 }

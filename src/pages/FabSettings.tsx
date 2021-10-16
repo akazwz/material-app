@@ -14,16 +14,22 @@ import Drawer from '@mui/material/Drawer';
 import InputLabel from '@mui/material/InputLabel';
 import {useTranslation} from 'react-i18next';
 import {useAppDispatch, useAppSelector} from '../hooks/hooks';
-import {setDark, setLight, themeValue} from '../redux/theme';
-
+import {setThemeMode, setThemeMainColor, theme} from '../redux/theme';
 
 const FabSettings = () => {
     const {t, i18n} = useTranslation();
     let lang = i18n.language;
+    if (!lang) {
+        lang = 'zh';
+    }
     const [drawerOpen, setDrawerOpen] = useState(false);
+    const themeValue = useAppSelector(theme);
+    let mainColorInit = themeValue.theme.mainColor;
+    let themeModeInit = themeValue.theme.mode;
+    const [themeModeCustom, setThemeModeCustom] = useState(themeModeInit);
+    const [langCustom, setLangCustom] = useState(lang);
 
     const dispatch = useAppDispatch();
-    const themeType = useAppSelector(themeValue);
 
     const handleSettingOnClick = () => {
         setDrawerOpen(true);
@@ -35,24 +41,28 @@ const FabSettings = () => {
 
     const handleThemeOnChange = (event: SelectChangeEvent) => {
         const value = event.target.value;
+        let mode: 'light' | 'dark';
         switch (value) {
             case 'light':
-                dispatch(setLight());
-                localStorage.setItem('theme', 'light');
-                return;
+                mode = 'light'
+                setThemeModeCustom('light');
+                break;
             case 'dark':
-                dispatch(setDark());
-                localStorage.setItem('theme', 'dark');
-                return;
+                mode = 'dark';
+                setThemeModeCustom('dark');
+                break
             default:
-                dispatch(setLight());
+                mode = 'light';
+                setThemeModeCustom('light');
         }
+        dispatch(setThemeMode(mode));
     };
 
     const handleLanguagesOnChange = (event: SelectChangeEvent) => {
         const value = event.target.value;
         localStorage.setItem('language', value);
         i18n.changeLanguage(value).then();
+        setLangCustom(value);
     };
 
     return (
@@ -83,27 +93,28 @@ const FabSettings = () => {
                     <List
                         subheader={
                             <ListSubheader component='div' id='nested-list-subheader'>
-                                {t('FabSettings.settings')}
+                                {t('fabSettings.settings')}
                             </ListSubheader>
                         }
                     >
                         <ListItem button key='theme'>
                             <FormControl fullWidth>
                                 <InputLabel id='demo-controlled-open-select-label'>
-                                    {t('FabSettings.theme')}
+                                    {t('fabSettings.theme')}
                                 </InputLabel>
                                 <Select
                                     labelId='demo-controlled-open-select-label'
                                     id='demo-controlled-open-select'
                                     label='Theme'
-                                    defaultValue={themeType}
+                                    //defaultValue={themeType}
+                                    value={themeModeCustom}
                                     onChange={handleThemeOnChange}
                                 >
                                     <MenuItem value='light'>
-                                        {t('FabSettings.light')}
+                                        {t('fabSettings.light')}
                                     </MenuItem>
                                     <MenuItem value='dark'>
-                                        {t('FabSettings.dark')}
+                                        {t('fabSettings.dark')}
                                     </MenuItem>
                                 </Select>
                             </FormControl>
@@ -111,13 +122,13 @@ const FabSettings = () => {
                         <ListItem button key='languages'>
                             <FormControl fullWidth>
                                 <InputLabel id='demo-controlled-open-select-label'>
-                                    {t('FabSettings.languages')}
+                                    {t('fabSettings.languages')}
                                 </InputLabel>
                                 <Select
                                     labelId='demo-controlled-open-select-label'
                                     id='demo-controlled-open-select'
-                                    label={t('FabSettings.languages')}
-                                    defaultValue={lang}
+                                    label={t('fabSettings.languages')}
+                                    value={langCustom}
                                     onChange={handleLanguagesOnChange}
                                 >
                                     <MenuItem value='zh'>中文</MenuItem>

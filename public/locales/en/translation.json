@@ -14,7 +14,7 @@
     "pwdHelperPattern": "Password must contains letters and math",
     "pwdHelperNull": "Password can not be null"
   },
-  "FabSettings": {
+  "fabSettings": {
     "settings": "Settings",
     "theme": "Theme",
     "light": "Light",
