@@ -17,7 +17,8 @@
   "FabSettings": {
     "settings": "Settings",
     "theme": "Theme",
-    "light": "light",
-    "dark": "dark"
+    "light": "Light",
+    "dark": "Dark",
+    "languages": "Languages"
   }
 }

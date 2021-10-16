@@ -15,4 +15,9 @@ i18n
         },
     }).then();
 
+let lang = localStorage.getItem('language');
+if (lang) {
+    i18n.changeLanguage(lang).then();
+}
+
 export default i18n;

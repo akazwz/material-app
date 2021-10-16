@@ -5,6 +5,8 @@ import {themeValue} from './redux/theme';
 import SignInSide from './pages/SighInSide';
 import FabSettings from "./pages/FabSettings";
 import './App.css';
+import Backdrop from '@mui/material/Backdrop/Backdrop';
+import CircularProgress from '@mui/material/CircularProgress/CircularProgress';
 
 function App() {
     const themeType = useAppSelector(themeValue);
@@ -15,7 +17,13 @@ function App() {
     });
 
     return (
-        <Suspense fallback={"loading..."}>
+        <Suspense fallback={
+            <Backdrop
+                open={true}
+            >
+                <CircularProgress color="inherit" />
+            </Backdrop>
+        }>
             <ThemeProvider theme={theme}>
                 <React.Fragment>
                     <SignInSide/>

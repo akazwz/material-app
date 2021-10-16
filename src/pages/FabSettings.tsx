@@ -18,7 +18,8 @@ import {setDark, setLight, themeValue} from '../redux/theme';
 
 
 const FabSettings = () => {
-    const {t} = useTranslation();
+    const {t, i18n} = useTranslation();
+    let lang = i18n.language;
     const [drawerOpen, setDrawerOpen] = useState(false);
 
     const dispatch = useAppDispatch();
@@ -46,6 +47,12 @@ const FabSettings = () => {
             default:
                 dispatch(setLight());
         }
+    };
+
+    const handleLanguagesOnChange = (event: SelectChangeEvent) => {
+        const value = event.target.value;
+        localStorage.setItem('language', value);
+        i18n.changeLanguage(value).then();
     };
 
     return (
@@ -101,18 +108,20 @@ const FabSettings = () => {
                                 </Select>
                             </FormControl>
                         </ListItem>
-                        <ListItem button key='theme'>
+                        <ListItem button key='languages'>
                             <FormControl fullWidth>
-                                <InputLabel id='demo-controlled-open-select-label'>Theme</InputLabel>
+                                <InputLabel id='demo-controlled-open-select-label'>
+                                    {t('FabSettings.languages')}
+                                </InputLabel>
                                 <Select
                                     labelId='demo-controlled-open-select-label'
                                     id='demo-controlled-open-select'
-                                    label='Theme'
-                                    defaultValue={themeType}
-                                    onChange={handleThemeOnChange}
+                                    label={t('FabSettings.languages')}
+                                    defaultValue={lang}
+                                    onChange={handleLanguagesOnChange}
                                 >
-                                    <MenuItem value='light'>Light</MenuItem>
-                                    <MenuItem value='dark'>Dark</MenuItem>
+                                    <MenuItem value='zh'>中文</MenuItem>
+                                    <MenuItem value='en'>English</MenuItem>
                                 </Select>
                             </FormControl>
                         </ListItem>
