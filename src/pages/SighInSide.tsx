@@ -1,24 +1,21 @@
 import React, {useState} from 'react';
-import Avatar from '@mui/material/Avatar';
-import Button from '@mui/material/Button';
-import CssBaseline from '@mui/material/CssBaseline';
-import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
 import Link from '@mui/material/Link';
 import Paper from '@mui/material/Paper';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
-import {createTheme, ThemeProvider} from '@mui/material/styles';
-import Copyright from '../components/Copyright';
+import Avatar from '@mui/material/Avatar';
+import Button from '@mui/material/Button';
 import InputAdornment from '@mui/material/InputAdornment';
 import IconButton from '@mui/material/IconButton/IconButton';
 import {Visibility, VisibilityOff} from '@mui/icons-material';
-import FormControl from '@mui/material/FormControl/FormControl';
-import InputLabel from '@mui/material/InputLabel/InputLabel';
-import OutlinedInput from '@mui/material/OutlinedInput/OutlinedInput';
+import {createTheme, ThemeProvider} from '@mui/material/styles';
+import CssBaseline from '@mui/material/CssBaseline';
+import TextField from '@mui/material/TextField';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Checkbox from '@mui/material/Checkbox';
+import Copyright from '../components/Copyright';
 
 const theme = createTheme();
 
@@ -31,6 +28,7 @@ const SignInSide = () => {
     const [pwdHelper, setPwdHelper] = useState('');
     const [showPassword, setShowPassword] = useState(false);
 
+    // submit
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
@@ -40,6 +38,7 @@ const SignInSide = () => {
         });
     };
 
+    // phone on blur
     const handlePhoneOnBlur = () => {
         let reg = /^1[3456789]\d{9}$/;
         if (phone === '') {
@@ -56,6 +55,7 @@ const SignInSide = () => {
         }
     }
 
+    // phone value control
     const handlePhoneChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const value = event.target.value;
         if (value.length > 11) {
@@ -71,6 +71,7 @@ const SignInSide = () => {
         }
     }
 
+    // password on blur
     const handlePwdOnBlur = () => {
         const patternPwd = /^.*([0-9])+.*$/i;
         if (password === '') {
@@ -92,6 +93,7 @@ const SignInSide = () => {
         }
     }
 
+    // password control
     const handlePwdChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         event.preventDefault();
         const value = event.target.value;
@@ -102,7 +104,8 @@ const SignInSide = () => {
         }
     }
 
-    const handleClickShowPassword = () => {
+    // toggle show password
+    const handleToggleShowPassword = () => {
         setShowPassword(!showPassword);
     };
 
@@ -185,7 +188,7 @@ const SignInSide = () => {
                                     endAdornment: <InputAdornment position='end'>
                                         <IconButton
                                             aria-label='toggle password visibility'
-                                            onClick={handleClickShowPassword}
+                                            onClick={handleToggleShowPassword}
                                             onMouseDown={handleMouseDownPassword}
                                         >
                                             {password.length > 1 ? showPassword ? <VisibilityOff/> :
@@ -199,29 +202,6 @@ const SignInSide = () => {
                                 value={password}
                                 onChange={handlePwdChange}
                             />
-                            {/*<FormControl variant='outlined' fullWidth required>
-                                <InputLabel htmlFor='outlined-adornment-password'>Password</InputLabel>
-                                <OutlinedInput
-                                    fullWidth
-                                    id='outlined-adornment-password'
-                                    type={showPassword ? 'text' : 'password'}
-                                    value={password}
-                                    onChange={handlePwdChange}
-                                    endAdornment={
-                                        <InputAdornment position='end'>
-                                            <IconButton
-                                                aria-label='toggle password visibility'
-                                                onClick={handleClickShowPassword}
-                                                onMouseDown={handleMouseDownPassword}
-                                                edge='end'
-                                            >
-                                                {showPassword ? <VisibilityOff/> : <Visibility/>}
-                                            </IconButton>
-                                        </InputAdornment>
-                                    }
-                                    label='Password'
-                                />
-                            </FormControl>*/}
                             <FormControlLabel
                                 control={<Checkbox value='remember' color='primary'/>}
                                 label='Remember me'
