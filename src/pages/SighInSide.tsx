@@ -10,6 +10,7 @@ import Button from '@mui/material/Button';
 import InputAdornment from '@mui/material/InputAdornment';
 import IconButton from '@mui/material/IconButton/IconButton';
 import {Visibility, VisibilityOff} from '@mui/icons-material';
+import {useTranslation} from 'react-i18next';
 import {createTheme, ThemeProvider} from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
@@ -20,6 +21,7 @@ import Copyright from '../components/Copyright';
 const theme = createTheme();
 
 const SignInSide = () => {
+    const {t} = useTranslation();
     const [phoneError, setPhoneError] = useState(false);
     const [phone, setPhone] = useState('');
     const [phoneHelper, setPhoneHelper] = useState('');
@@ -42,8 +44,8 @@ const SignInSide = () => {
     const handlePhoneOnBlur = () => {
         let reg = /^1[3456789]\d{9}$/;
         if (phone === '') {
-            setPhoneHelper('');
-            setPhoneError(false);
+            setPhoneError(true);
+            setPhoneHelper(t('signInSide.phoneHelperNull'));
             return;
         }
         if (reg.test(phone)) {
@@ -51,7 +53,7 @@ const SignInSide = () => {
             setPhoneError(false);
         } else {
             setPhoneError(true);
-            setPhoneHelper('Please Input The Right Phone Number.');
+            setPhoneHelper(t('signInSide.phoneHelperRight'));
         }
     }
 
@@ -67,29 +69,7 @@ const SignInSide = () => {
             setPhone(value);
         } else {
             setPhoneError(true);
-            setPhoneHelper('Only Number.');
-        }
-    }
-
-    // password on blur
-    const handlePwdOnBlur = () => {
-        const patternPwd = /^.*([0-9])+.*$/i;
-        if (password === '') {
-            setPwdHelper('');
-            setPwdError(false);
-            return;
-        }
-        if (password.length < 6) {
-            setPwdError(true);
-            setPwdHelper('Password length must > 6');
-            return;
-        }
-        if (patternPwd.test(password)) {
-            setPwdHelper('');
-            setPhoneError(false);
-        } else {
-            setPhoneError(true);
-            setPhoneHelper('Password must contains letters and math.');
+            setPhoneHelper(t('signInSide.phoneHelperNumber'));
         }
     }
 
@@ -98,11 +78,34 @@ const SignInSide = () => {
         event.preventDefault();
         const value = event.target.value;
         if (value.length < 30) {
-            setPwdHelper('');
             setPwdError(false);
+            setPwdHelper('');
             setPassword(value);
         }
     }
+
+    // password on blur
+    const handlePwdOnBlur = () => {
+        const patternPwd = /^.*([0-9])+.*$/i;
+        if (password === '') {
+            setPwdError(true);
+            setPwdHelper(t('signInSide.pwdHelperNull'));
+            return;
+        }
+        if (password.length < 6) {
+            setPwdError(true);
+            setPwdHelper(t('signInSide.pwdHelperLength'));
+            return;
+        }
+        if (patternPwd.test(password)) {
+            setPwdError(false);
+            setPwdHelper('');
+        } else {
+            setPwdError(true);
+            setPwdHelper(t('signInSide.pwdHelperPattern'));
+        }
+    }
+
 
     // toggle show password
     const handleToggleShowPassword = () => {
@@ -154,7 +157,7 @@ const SignInSide = () => {
                             <LockOutlinedIcon/>
                         </Avatar>
                         <Typography component='h1' variant='h5'>
-                            Sign in
+                            {t('signInSide.signIn')}
                         </Typography>
                         <Box component='form' noValidate onSubmit={handleSubmit} sx={{mt: 1}}>
                             <TextField
@@ -162,7 +165,7 @@ const SignInSide = () => {
                                 required
                                 fullWidth
                                 id='phone'
-                                label='Phone Number'
+                                label={t('signInSide.phoneNumber')}
                                 name='phone'
                                 autoComplete='off'
                                 autoFocus
@@ -180,7 +183,7 @@ const SignInSide = () => {
                                 required
                                 fullWidth
                                 name='password'
-                                label='Password'
+                                label={t('signInSide.password')}
                                 type={showPassword ? 'text' : 'password'}
                                 id='password'
                                 autoComplete='off'
@@ -204,7 +207,7 @@ const SignInSide = () => {
                             />
                             <FormControlLabel
                                 control={<Checkbox value='remember' color='primary'/>}
-                                label='Remember me'
+                                label={t('signInSide.rememberMe')}
                             />
                             <Button
                                 type='submit'
@@ -212,17 +215,17 @@ const SignInSide = () => {
                                 variant='contained'
                                 sx={{mt: 3, mb: 2}}
                             >
-                                Sign In
+                                {t('signInSide.signInBtn')}
                             </Button>
                             <Grid container>
                                 <Grid item xs>
                                     <Link href='#' variant='body2'>
-                                        Forgot password?
+                                        {t('signInSide.forgotPwd')}
                                     </Link>
                                 </Grid>
                                 <Grid item>
                                     <Link href='#' variant='body2'>
-                                        {"Don't have an account? Sign Up"}
+                                        {t('signInSide.toSignUp')}
                                     </Link>
                                 </Grid>
                             </Grid>

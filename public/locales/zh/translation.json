@@ -1,0 +1,23 @@
+{
+  "signInSide": {
+    "signIn": "登录",
+    "phoneNumber": "手机",
+    "password": "密码",
+    "rememberMe": "记住我",
+    "signInBtn": "登录",
+    "forgotPwd": "忘记密码?",
+    "toSignUp": "没有账户? 去注册",
+    "phoneHelperRight": "请输入正确的手机号码",
+    "phoneHelperNumber": "只允许输入数字",
+    "phoneHelperNull": "手机号不能为空",
+    "pwdHelperLength": "密码长度必须大于6",
+    "pwdHelperPattern": "密码必须同时包含字母和数字",
+    "pwdHelperNull": "密码不能为空"
+  },
+  "FabSettings": {
+    "settings": "设置",
+    "theme": "主题",
+    "light": "明亮模式",
+    "dark": "黑暗模式"
+  }
+}

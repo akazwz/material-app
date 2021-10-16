@@ -1,0 +1,23 @@
+{
+  "signInSide": {
+    "signIn": "Sign In",
+    "phoneNumber": "Phone Number",
+    "password": "Password",
+    "rememberMe": "Remember Me",
+    "signInBtn": "SIGH IN",
+    "forgotPwd": "Forgot password?",
+    "toSignUp": "Don't have an account? Sign Up",
+    "phoneHelperRight": "Please input the right phone number",
+    "phoneHelperNumber": "Only number",
+    "phoneHelperNull": "Phone number can not be bull",
+    "pwdHelperLength": "Password length must > 6",
+    "pwdHelperPattern": "Password must contains letters and math",
+    "pwdHelperNull": "Password can not be null"
+  },
+  "FabSettings": {
+    "settings": "Settings",
+    "theme": "Theme",
+    "light": "light",
+    "dark": "dark"
+  }
+}
