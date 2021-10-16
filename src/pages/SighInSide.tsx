@@ -9,16 +9,14 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import InputAdornment from '@mui/material/InputAdornment';
 import IconButton from '@mui/material/IconButton/IconButton';
-import {Visibility, VisibilityOff} from '@mui/icons-material';
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import {useTranslation} from 'react-i18next';
-import {createTheme, ThemeProvider} from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
 import Copyright from '../components/Copyright';
-
-const theme = createTheme();
 
 const SignInSide = () => {
     const {t} = useTranslation();
@@ -117,7 +115,6 @@ const SignInSide = () => {
     };
 
     return (
-        <ThemeProvider theme={theme}>
             <Grid container component='main' sx={{height: '100vh'}}>
                 <CssBaseline/>
                 {/*side image*/}
@@ -195,7 +192,7 @@ const SignInSide = () => {
                                             onMouseDown={handleMouseDownPassword}
                                         >
                                             {password.length > 1 ? showPassword ? <VisibilityOff/> :
-                                                <Visibility/> : null}
+                                                <VisibilityIcon/> : null}
                                         </IconButton>
                                     </InputAdornment>,
                                 }}
@@ -234,7 +231,6 @@ const SignInSide = () => {
                     </Box>
                 </Grid>
             </Grid>
-        </ThemeProvider>
     );
 }
 
