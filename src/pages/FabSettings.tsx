@@ -15,6 +15,8 @@ import InputLabel from '@mui/material/InputLabel';
 import {useTranslation} from 'react-i18next';
 import {useAppDispatch, useAppSelector} from '../hooks/hooks';
 import {setThemeMode, setThemeMainColor, theme} from '../redux/theme';
+import ColorPicker from "../components/ColorPicker";
+import {ListItemButton, ListItemIcon, ListItemText} from "@mui/material";
 
 const FabSettings = () => {
     const {t, i18n} = useTranslation();
@@ -136,8 +138,20 @@ const FabSettings = () => {
                                 </Select>
                             </FormControl>
                         </ListItem>
+                        <ListItem button key='mainColor'>
+                            <ListItemIcon>
+                                some
+                            </ListItemIcon>
+                            <ListItemText>
+                                some
+                            </ListItemText>
+                            <ListItemButton>
+                                btn
+                            </ListItemButton>
+                        </ListItem>
                     </List>
                     <Divider/>
+                    <ColorPicker/>
                 </Box>
             </Drawer>
         </React.Fragment>
