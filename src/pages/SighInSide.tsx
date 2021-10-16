@@ -1,10 +1,9 @@
-import * as React from 'react';
+import React, {useState} from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
 import FormControlLabel from '@mui/material/FormControlLabel';
-import FormControl, {useFormControl} from '@mui/material/FormControl';
 import Checkbox from '@mui/material/Checkbox';
 import Link from '@mui/material/Link';
 import Paper from '@mui/material/Paper';
@@ -14,21 +13,27 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import {createTheme, ThemeProvider} from '@mui/material/styles';
 import Copyright from '../components/Copyright';
-import {ChangeEvent, SyntheticEvent, useState} from "react";
 import InputAdornment from '@mui/material/InputAdornment';
+import IconButton from '@mui/material/IconButton/IconButton';
+import {Visibility, VisibilityOff} from '@mui/icons-material';
+import FormControl from '@mui/material/FormControl/FormControl';
+import InputLabel from '@mui/material/InputLabel/InputLabel';
+import OutlinedInput from '@mui/material/OutlinedInput/OutlinedInput';
 
 const theme = createTheme();
 
 const SignInSide = () => {
     const [phoneError, setPhoneError] = useState(false);
-    const [pwdError, setPwdError] = useState(false);
     const [phone, setPhone] = useState('');
     const [phoneHelper, setPhoneHelper] = useState('');
+    const [pwdError, setPwdError] = useState(false);
+    const [password, setPassword] = useState('');
+    const [pwdHelper, setPwdHelper] = useState('');
+    const [showPassword, setShowPassword] = useState(false);
 
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
-        // eslint-disable-next-line no-console
         console.log({
             email: data.get('phone'),
             password: data.get('password'),
@@ -65,6 +70,46 @@ const SignInSide = () => {
             setPhoneHelper('Only Number.');
         }
     }
+
+    const handlePwdOnBlur = () => {
+        const patternPwd = /^.*([0-9])+.*$/i;
+        if (password === '') {
+            setPwdHelper('');
+            setPwdError(false);
+            return;
+        }
+        if (password.length < 6) {
+            setPwdError(true);
+            setPwdHelper('Password length must > 6');
+            return;
+        }
+        if (patternPwd.test(password)) {
+            setPwdHelper('');
+            setPhoneError(false);
+        } else {
+            setPhoneError(true);
+            setPhoneHelper('Password must contains letters and math.');
+        }
+    }
+
+    const handlePwdChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        event.preventDefault();
+        const value = event.target.value;
+        if (value.length < 30) {
+            setPwdHelper('');
+            setPwdError(false);
+            setPassword(value);
+        }
+    }
+
+    const handleClickShowPassword = () => {
+        setShowPassword(!showPassword);
+    };
+
+    const handleMouseDownPassword = (event: React.MouseEvent<HTMLButtonElement>) => {
+        event.preventDefault();
+    };
+
     return (
         <ThemeProvider theme={theme}>
             <Grid container component='main' sx={{height: '100vh'}}>
@@ -133,11 +178,50 @@ const SignInSide = () => {
                                 fullWidth
                                 name='password'
                                 label='Password'
-                                type='password'
+                                type={showPassword ? 'text' : 'password'}
                                 id='password'
-                                autoComplete='current-password'
+                                autoComplete='off'
+                                InputProps={{
+                                    endAdornment: <InputAdornment position='end'>
+                                        <IconButton
+                                            aria-label='toggle password visibility'
+                                            onClick={handleClickShowPassword}
+                                            onMouseDown={handleMouseDownPassword}
+                                        >
+                                            {password.length > 1 ? showPassword ? <VisibilityOff/> :
+                                                <Visibility/> : null}
+                                        </IconButton>
+                                    </InputAdornment>,
+                                }}
                                 error={pwdError}
+                                helperText={pwdHelper}
+                                onBlur={handlePwdOnBlur}
+                                value={password}
+                                onChange={handlePwdChange}
                             />
+                            {/*<FormControl variant='outlined' fullWidth required>
+                                <InputLabel htmlFor='outlined-adornment-password'>Password</InputLabel>
+                                <OutlinedInput
+                                    fullWidth
+                                    id='outlined-adornment-password'
+                                    type={showPassword ? 'text' : 'password'}
+                                    value={password}
+                                    onChange={handlePwdChange}
+                                    endAdornment={
+                                        <InputAdornment position='end'>
+                                            <IconButton
+                                                aria-label='toggle password visibility'
+                                                onClick={handleClickShowPassword}
+                                                onMouseDown={handleMouseDownPassword}
+                                                edge='end'
+                                            >
+                                                {showPassword ? <VisibilityOff/> : <Visibility/>}
+                                            </IconButton>
+                                        </InputAdornment>
+                                    }
+                                    label='Password'
+                                />
+                            </FormControl>*/}
                             <FormControlLabel
                                 control={<Checkbox value='remember' color='primary'/>}
                                 label='Remember me'
