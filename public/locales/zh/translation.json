@@ -16,9 +16,9 @@
   },
   "fabSettings": {
     "settings": "设置",
-    "theme": "主题",
-    "light": "浅色",
-    "dark": "深色",
-    "languages": "语言"
+    "themeMode": "主题外观",
+    "languages": "语言",
+    "mainColor": "主色调",
+    "secondColor": "次色调"
   }
 }

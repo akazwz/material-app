@@ -16,9 +16,9 @@
   },
   "fabSettings": {
     "settings": "Settings",
-    "theme": "Theme",
-    "light": "Light",
-    "dark": "Dark",
-    "languages": "Languages"
+    "themeMode": "Theme Mode",
+    "languages": "Languages",
+    "mainColor": "Main Color",
+    "secondColor": "Second Color"
   }
 }

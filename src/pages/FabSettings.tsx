@@ -3,9 +3,6 @@ import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
 import AppBar from '@mui/material/AppBar';
 import Fab from '@mui/material/Fab';
 import Box from '@mui/material/Box';
-import FormControl from '@mui/material/FormControl';
-import MenuItem from '@mui/material/MenuItem';
-import Select, {SelectChangeEvent} from '@mui/material/Select';
 import List from '@mui/material/List';
 import Divider from '@mui/material/Divider';
 import ListItem from '@mui/material/ListItem';
@@ -22,7 +19,6 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogActions from '@mui/material/DialogActions';
 import Dialog from '@mui/material/Dialog';
 import Drawer from '@mui/material/Drawer';
-import InputLabel from '@mui/material/InputLabel';
 import {useTranslation} from 'react-i18next';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import TextField from '@mui/material/TextField';
@@ -45,7 +41,6 @@ const FabSettings = (props: any) => {
     const themeValue = useAppSelector(theme);
     let mainColorInit = themeValue.theme.mainColor;
     let themeModeInit = themeValue.theme.mode;
-    const [langCustom, setLangCustom] = useState(lang);
     const [color, setColor] = useState(mainColorInit);
     const [dialogColorPicker, setDialogColorPicker] = useState(false);
     const [switchDarkMode, setSwitchDarkMode] = useState(themeModeInit === 'dark');
@@ -60,13 +55,6 @@ const FabSettings = (props: any) => {
     const handleDrawerOnClose = () => {
         setDrawerOpen(false);
     }
-
-    const handleLanguagesOnChange = (event: SelectChangeEvent) => {
-        const value = event.target.value;
-        localStorage.setItem('language', value);
-        i18n.changeLanguage(value).then();
-        setLangCustom(value);
-    };
 
     const handleColorInputOnChange = (event: ChangeEvent<HTMLInputElement>) => {
         const value = event.target.value;
@@ -119,31 +107,11 @@ const FabSettings = (props: any) => {
                             </ListSubheader>
                         }
                     >
-                        <ListItem button key='languages'>
-                            <ListItemIcon>
-                                <TranslateOutlinedIcon/>
-                            </ListItemIcon>
-                            <FormControl fullWidth>
-                                <InputLabel id='demo-controlled-open-select-label'>
-                                    {t('fabSettings.languages')}
-                                </InputLabel>
-                                <Select
-                                    labelId='demo-controlled-open-select-label'
-                                    id='demo-controlled-open-select'
-                                    label={t('fabSettings.languages')}
-                                    value={langCustom}
-                                    onChange={handleLanguagesOnChange}
-                                >
-                                    <MenuItem value='zh'>中文</MenuItem>
-                                    <MenuItem value='en'>English</MenuItem>
-                                </Select>
-                            </FormControl>
-                        </ListItem>
                         <ListItem button key='themeMode'>
                             <ListItemIcon>
                                 <SettingsBrightnessOutlinedIcon/>
                             </ListItemIcon>
-                            <ListItemText id='switch-list-label-wifi' primary='ThemeMode'/>
+                            <ListItemText primary={t('fabSettings.themeMode')}/>
                             <MuiSwitchThemeMode checked={switchDarkMode} onChange={() => {
                                 if (!switchDarkMode) {
                                     dispatch(setThemeMode('dark'));
@@ -159,7 +127,7 @@ const FabSettings = (props: any) => {
                             <ListItemIcon>
                                 <TranslateOutlinedIcon/>
                             </ListItemIcon>
-                            <ListItemText id='switch-list-label-wifi' primary='ThemeMode'/>
+                            <ListItemText primary={t('fabSettings.languages')}/>
                             <MuiSwitchLanguage checked={switchLangEn} onChange={() => {
                                 if (!switchLangEn) {
                                     localStorage.setItem('language', 'en');
@@ -175,7 +143,7 @@ const FabSettings = (props: any) => {
                             <ListItemIcon>
                                 <FormatColorFillOutlinedIcon/>
                             </ListItemIcon>
-                            <ListItemText id='switch-list-label-wifi' primary='Main Color'/>
+                            <ListItemText primary={t('fabSettings.mainColor')}/>
                             <IconButton
                                 aria-label='toggle password visibility'
                                 onClick={() => setDialogColorPicker(true)}
@@ -185,21 +153,9 @@ const FabSettings = (props: any) => {
                         </ListItem>
                         <ListItem button key='mainColor'>
                             <ListItemIcon>
-                                <FormatColorFillOutlinedIcon/>
-                            </ListItemIcon>
-                            <ListItemText id='switch-list-label-wifi' primary='Main Color'/>
-                            <IconButton
-                                aria-label='toggle password visibility'
-                                onClick={() => setDialogColorPicker(true)}
-                            >
-                                <PaletteOutlinedIcon color='primary'/>
-                            </IconButton>
-                        </ListItem>
-                        <ListItem button key='secondColor'>
-                            <ListItemIcon>
                                 <ColorizeIcon/>
                             </ListItemIcon>
-                            <ListItemText id='switch-list-label-wifi' primary='Second Color'/>
+                            <ListItemText id='switch-list-label-wifi' primary={t('fabSettings.secondColor')}/>
                             <IconButton
                                 aria-label='toggle password visibility'
                                 onClick={() => setDialogColorPicker(true)}
