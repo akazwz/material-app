@@ -10,34 +10,30 @@ import List from '@mui/material/List';
 import Divider from '@mui/material/Divider';
 import ListItem from '@mui/material/ListItem';
 import ListSubheader from '@mui/material/ListSubheader';
-import Drawer from '@mui/material/Drawer';
-import InputLabel from '@mui/material/InputLabel';
-import {useTranslation} from 'react-i18next';
-import {useAppDispatch, useAppSelector} from '../hooks/hooks';
-import {setThemeMode, setThemeMainColor, theme} from '../redux/theme';
-import ColorPicker from "../components/ColorPicker";
-import {ListItemButton, ListItemIcon, ListItemText, TextField} from "@mui/material";
-import InputAdornment from "@mui/material/InputAdornment";
 import IconButton from "@mui/material/IconButton/IconButton";
-import VisibilityOff from "@mui/icons-material/VisibilityOff";
-import VisibilityIcon from "@mui/icons-material/Visibility";
-import ColorLensIcon from '@mui/icons-material/ColorLens';
-import {styled} from '@mui/material/styles';
 import Button from '@mui/material/Button';
-import Tooltip, {TooltipProps, tooltipClasses} from '@mui/material/Tooltip';
-import DialogTitle from '@mui/material/DialogTitle';
-import DialogContent from '@mui/material/DialogContent';
-import DialogActions from '@mui/material/DialogActions';
-import Dialog from '@mui/material/Dialog';
 import ColorizeIcon from '@mui/icons-material/Colorize';
-import Brightness6OutlinedIcon from '@mui/icons-material/Brightness6Outlined';
 import SettingsBrightnessOutlinedIcon from '@mui/icons-material/SettingsBrightnessOutlined';
 import TranslateOutlinedIcon from '@mui/icons-material/TranslateOutlined';
 import FormatColorFillOutlinedIcon from '@mui/icons-material/FormatColorFillOutlined';
 import PaletteOutlinedIcon from '@mui/icons-material/PaletteOutlined';
-import {FullScreen, useFullScreenHandle} from "react-full-screen";
+import DialogTitle from '@mui/material/DialogTitle';
+import DialogContent from '@mui/material/DialogContent';
+import DialogActions from '@mui/material/DialogActions';
+import Dialog from '@mui/material/Dialog';
+import Drawer from '@mui/material/Drawer';
+import InputLabel from '@mui/material/InputLabel';
+import {useTranslation} from 'react-i18next';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import TextField from '@mui/material/TextField';
+import ListItemText from '@mui/material/ListItemText';
 // @ts-ignore
 import fscreen from 'fscreen';
+import {useAppDispatch, useAppSelector} from '../hooks/hooks';
+import {setThemeMode, setThemeMainColor, theme} from '../redux/theme';
+import MuiSwitchThemeMode from '../components/MuiSwitchThemeMode';
+import MuiSwitchLanguage from '../components/MuiSwitchLanguage';
+import ColorPicker from '../components/ColorPicker';
 
 const FabSettings = (props: any) => {
     const {t, i18n} = useTranslation();
@@ -49,10 +45,11 @@ const FabSettings = (props: any) => {
     const themeValue = useAppSelector(theme);
     let mainColorInit = themeValue.theme.mainColor;
     let themeModeInit = themeValue.theme.mode;
-    const [themeModeCustom, setThemeModeCustom] = useState(themeModeInit);
     const [langCustom, setLangCustom] = useState(lang);
     const [color, setColor] = useState(mainColorInit);
     const [dialogColorPicker, setDialogColorPicker] = useState(false);
+    const [switchDarkMode, setSwitchDarkMode] = useState(themeModeInit === 'dark');
+    const [switchLangEn, setSwitchLangEn] = useState(lang === 'en');
 
     const dispatch = useAppDispatch();
 
@@ -63,29 +60,6 @@ const FabSettings = (props: any) => {
     const handleDrawerOnClose = () => {
         setDrawerOpen(false);
     }
-
-    const handleThemeOnChange = (event: SelectChangeEvent) => {
-        const value = event.target.value;
-        let mode: 'light' | 'dark';
-        switch (value) {
-            case 'light':
-                mode = 'light'
-                setThemeModeCustom('light');
-                localStorage.setItem('themeMode', 'light');
-                break;
-            case 'dark':
-                mode = 'dark';
-                setThemeModeCustom('dark');
-                localStorage.setItem('themeMode', 'dark');
-                break
-            default:
-                mode = 'light';
-                setThemeModeCustom('light');
-                localStorage.setItem('themeMode', 'light');
-        }
-
-        dispatch(setThemeMode(mode));
-    };
 
     const handleLanguagesOnChange = (event: SelectChangeEvent) => {
         const value = event.target.value;
@@ -109,21 +83,12 @@ const FabSettings = (props: any) => {
         localStorage.setItem('mainColor', color);
     }
 
-    const HtmlTooltip = styled(({className, ...props}: TooltipProps) => (
-        <Tooltip {...props} classes={{popper: className}}/>
-    ))(({theme}) => ({
-        [`& .${tooltipClasses.tooltip}`]: {
-            backgroundColor: '#f5f5f9',
-            color: 'rgba(0, 0, 0, 0.87)',
-            maxWidth: 220,
-            fontSize: theme.typography.pxToRem(12),
-            border: '1px solid #dadde9',
-        },
-    }));
     const ref = useRef(null);
     return (
         <div ref={ref}>
-            <AppBar position='static' color='default'>
+            <AppBar
+                position='static'
+                color='default'>
                 <Fab
                     size='medium'
                     color='primary'
@@ -154,31 +119,6 @@ const FabSettings = (props: any) => {
                             </ListSubheader>
                         }
                     >
-                        <ListItem button key='theme'>
-                            <ListItemIcon>
-                                <SettingsBrightnessOutlinedIcon/>
-                            </ListItemIcon>
-                            <FormControl fullWidth>
-                                <InputLabel id='demo-controlled-open-select-label'>
-                                    {t('fabSettings.theme')}
-                                </InputLabel>
-                                <Select
-                                    labelId='demo-controlled-open-select-label'
-                                    id='demo-controlled-open-select'
-                                    label='Theme'
-                                    //defaultValue={themeType}
-                                    value={themeModeCustom}
-                                    onChange={handleThemeOnChange}
-                                >
-                                    <MenuItem value='light'>
-                                        {t('fabSettings.light')}
-                                    </MenuItem>
-                                    <MenuItem value='dark'>
-                                        {t('fabSettings.dark')}
-                                    </MenuItem>
-                                </Select>
-                            </FormControl>
-                        </ListItem>
                         <ListItem button key='languages'>
                             <ListItemIcon>
                                 <TranslateOutlinedIcon/>
@@ -198,6 +138,50 @@ const FabSettings = (props: any) => {
                                     <MenuItem value='en'>English</MenuItem>
                                 </Select>
                             </FormControl>
+                        </ListItem>
+                        <ListItem button key='themeMode'>
+                            <ListItemIcon>
+                                <SettingsBrightnessOutlinedIcon/>
+                            </ListItemIcon>
+                            <ListItemText id='switch-list-label-wifi' primary='ThemeMode'/>
+                            <MuiSwitchThemeMode checked={switchDarkMode} onChange={() => {
+                                if (!switchDarkMode) {
+                                    dispatch(setThemeMode('dark'));
+                                    localStorage.setItem('themeMode', 'dark');
+                                } else {
+                                    dispatch(setThemeMode('light'));
+                                    localStorage.setItem('themeMode', 'light');
+                                }
+                                setSwitchDarkMode(!switchDarkMode);
+                            }}/>
+                        </ListItem>
+                        <ListItem button key='languages'>
+                            <ListItemIcon>
+                                <TranslateOutlinedIcon/>
+                            </ListItemIcon>
+                            <ListItemText id='switch-list-label-wifi' primary='ThemeMode'/>
+                            <MuiSwitchLanguage checked={switchLangEn} onChange={() => {
+                                if (!switchLangEn) {
+                                    localStorage.setItem('language', 'en');
+                                    i18n.changeLanguage('en').then();
+                                } else {
+                                    localStorage.setItem('language', 'zh');
+                                    i18n.changeLanguage('zh').then();
+                                }
+                                setSwitchLangEn(!switchLangEn);
+                            }}/>
+                        </ListItem>
+                        <ListItem button key='mainColor'>
+                            <ListItemIcon>
+                                <FormatColorFillOutlinedIcon/>
+                            </ListItemIcon>
+                            <ListItemText id='switch-list-label-wifi' primary='Main Color'/>
+                            <IconButton
+                                aria-label='toggle password visibility'
+                                onClick={() => setDialogColorPicker(true)}
+                            >
+                                <PaletteOutlinedIcon color='primary'/>
+                            </IconButton>
                         </ListItem>
                         <ListItem button key='mainColor'>
                             <ListItemIcon>
@@ -239,6 +223,7 @@ const FabSettings = (props: any) => {
                         btn
                     </Button>
                     <Dialog
+                        container={ref.current}
                         sx={{'& .MuiDialog-paper': {width: '80%', maxHeight: 435}}}
                         maxWidth='xs'
                         open={dialogColorPicker}
