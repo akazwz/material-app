@@ -1,4 +1,4 @@
-import React, {ChangeEvent, useState} from 'react';
+import React, {ChangeEvent, useRef, useState} from 'react';
 import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
 import AppBar from '@mui/material/AppBar';
 import Fab from '@mui/material/Fab';
@@ -35,8 +35,11 @@ import SettingsBrightnessOutlinedIcon from '@mui/icons-material/SettingsBrightne
 import TranslateOutlinedIcon from '@mui/icons-material/TranslateOutlined';
 import FormatColorFillOutlinedIcon from '@mui/icons-material/FormatColorFillOutlined';
 import PaletteOutlinedIcon from '@mui/icons-material/PaletteOutlined';
+import {FullScreen, useFullScreenHandle} from "react-full-screen";
+// @ts-ignore
+import fscreen from 'fscreen';
 
-const FabSettings = () => {
+const FabSettings = (props: any) => {
     const {t, i18n} = useTranslation();
     let lang = i18n.language;
     if (!lang) {
@@ -117,9 +120,9 @@ const FabSettings = () => {
             border: '1px solid #dadde9',
         },
     }));
-
+    const ref = useRef(null);
     return (
-        <React.Fragment>
+        <div ref={ref}>
             <AppBar position='static' color='default'>
                 <Fab
                     size='medium'
@@ -135,6 +138,7 @@ const FabSettings = () => {
                 </Fab>
             </AppBar>
             <Drawer
+                container={ref.current}
                 anchor='right'
                 open={drawerOpen}
                 onClose={handleDrawerOnClose}
@@ -207,7 +211,7 @@ const FabSettings = () => {
                                 <PaletteOutlinedIcon color='primary'/>
                             </IconButton>
                         </ListItem>
-                        <ListItem button key='mainColor'>
+                        <ListItem button key='secondColor'>
                             <ListItemIcon>
                                 <ColorizeIcon/>
                             </ListItemIcon>
@@ -221,6 +225,19 @@ const FabSettings = () => {
                         </ListItem>
                     </List>
                     <Divider/>
+                    <Button onClick={() => {
+                        if (fscreen.fullscreenEnabled) {
+                            if (props.fullScreenActive) {
+                                props.fullScreenExit();
+                            } else {
+                                props.fullScreenEnter();
+                            }
+                        } else {
+                            alert('can not')
+                        }
+                    }}>
+                        btn
+                    </Button>
                     <Dialog
                         sx={{'& .MuiDialog-paper': {width: '80%', maxHeight: 435}}}
                         maxWidth='xs'
@@ -249,7 +266,7 @@ const FabSettings = () => {
                     </Dialog>
                 </Box>
             </Drawer>
-        </React.Fragment>
+        </div>
     );
 }
 

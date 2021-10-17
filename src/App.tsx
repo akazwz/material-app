@@ -5,8 +5,10 @@ import SignInSide from './pages/SighInSide';
 import FabSettings from "./pages/FabSettings";
 import './App.css';
 import Backdrop from '@mui/material/Backdrop/Backdrop';
+import {FullScreen, useFullScreenHandle} from "react-full-screen";
 import CircularProgress from '@mui/material/CircularProgress/CircularProgress';
 import {theme} from "./redux/theme";
+import Button from "@mui/material/Button";
 
 function App() {
     const themeValue = useAppSelector(theme);
@@ -23,6 +25,7 @@ function App() {
             }
         },
     });
+    const handle = useFullScreenHandle();
 
     return (
         <Suspense fallback={
@@ -34,8 +37,15 @@ function App() {
         }>
             <ThemeProvider theme={themeCustom}>
                 <React.Fragment>
-                    <SignInSide/>
-                    <FabSettings/>
+                    <FullScreen handle={handle}>
+                        <SignInSide/>
+                        <FabSettings
+                            fullScreenEnter={handle.enter}
+                            fullScreenExit={handle.exit}
+                            fullScreenActive={handle.active}
+                        />
+                    </FullScreen>
+
                 </React.Fragment>
             </ThemeProvider>
         </Suspense>

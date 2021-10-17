@@ -5572,6 +5572,11 @@ fs.realpath@^1.0.0:
   resolved "https://registry.npm.taobao.org/fs.realpath/download/fs.realpath-1.0.0.tgz#1504ad2523158caa40db4a2787cb01411994ea4f"
   integrity sha1-FQStJSMVjKpA20onh8sBQRmU6k8=
 
+fscreen@^1.0.2, fscreen@^1.2.0:
+  version "1.2.0"
+  resolved "https://registry.nlark.com/fscreen/download/fscreen-1.2.0.tgz#1a8c88e06bc16a07b473ad96196fb06d6657f59e"
+  integrity sha1-GoyI4GvBage0c62WGW+wbWZX9Z4=
+
 fsevents@^1.2.7:
   version "1.2.13"
   resolved "https://registry.npm.taobao.org/fsevents/download/fsevents-1.2.13.tgz?cache=0&sync_timestamp=1612536512306&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Ffsevents%2Fdownload%2Ffsevents-1.2.13.tgz#f325cb0455592428bcf11b383370ef70e3bfcc38"
@@ -9538,6 +9543,18 @@ react-error-overlay@^6.0.9:
   version "6.0.9"
   resolved "https://registry.npmmirror.com/react-error-overlay/download/react-error-overlay-6.0.9.tgz?cache=0&sync_timestamp=1633373332600&other_urls=https%3A%2F%2Fregistry.npmmirror.com%2Freact-error-overlay%2Fdownload%2Freact-error-overlay-6.0.9.tgz#3c743010c9359608c375ecd6bc76f35d93995b0a"
   integrity sha1-PHQwEMk1lgjDdezWvHbzXZOZWwo=
+
+react-full-screen@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.nlark.com/react-full-screen/download/react-full-screen-1.1.0.tgz#696c586da25652ed10d88046f8dc0b6620f4ef96"
+  integrity sha1-aWxYbaJWUu0Q2IBG+NwLZiD075Y=
+  dependencies:
+    fscreen "^1.0.2"
+
+react-fullscreen-crossbrowser@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.npmmirror.com/react-fullscreen-crossbrowser/download/react-fullscreen-crossbrowser-1.1.0.tgz#ff36d30198fd2f0bed307ca08a3653cb113f31cf"
+  integrity sha1-/zbTAZj9LwvtMHygijZTyxE/Mc8=
 
 react-i18next@^11.12.0:
   version "11.12.0"
