@@ -3,10 +3,13 @@ import Container from '@mui/material/Container/Container';
 import CssBaseline from '@mui/material/CssBaseline/CssBaseline';
 import {HexColorPicker} from "react-colorful";
 
-const ColorPicker = () => {
-    const [color, setColor] = useState('#ffffff');
-    const handleChangeComplete = (color: any) => {
+const ColorPicker = (props: any) => {
+    const initColor = props.initColor;
+    const handleColorChange = props.handleColorChange;
+    const [color, setColor] = useState(initColor);
+    const handleChange = (color: string) => {
         setColor(color);
+        handleColorChange(color);
     }
     return (
         <React.Fragment>
@@ -23,7 +26,7 @@ const ColorPicker = () => {
                         marginRight: 'auto'
                     }}
                     color={color}
-                    onChange={handleChangeComplete}
+                    onChange={handleChange}
                 />
             </Container>
         </React.Fragment>

@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {ChangeEvent, useState} from 'react';
 import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
 import AppBar from '@mui/material/AppBar';
 import Fab from '@mui/material/Fab';
@@ -16,7 +16,7 @@ import {useTranslation} from 'react-i18next';
 import {useAppDispatch, useAppSelector} from '../hooks/hooks';
 import {setThemeMode, setThemeMainColor, theme} from '../redux/theme';
 import ColorPicker from "../components/ColorPicker";
-import {ListItemButton, ListItemIcon, ListItemText} from "@mui/material";
+import {ListItemButton, ListItemIcon, ListItemText, TextField} from "@mui/material";
 
 const FabSettings = () => {
     const {t, i18n} = useTranslation();
@@ -30,6 +30,7 @@ const FabSettings = () => {
     let themeModeInit = themeValue.theme.mode;
     const [themeModeCustom, setThemeModeCustom] = useState(themeModeInit);
     const [langCustom, setLangCustom] = useState(lang);
+    const [color, setColor] = useState(mainColorInit);
 
     const dispatch = useAppDispatch();
 
@@ -66,6 +67,17 @@ const FabSettings = () => {
         i18n.changeLanguage(value).then();
         setLangCustom(value);
     };
+
+    const handleColorInputOnChange = (event: ChangeEvent<HTMLInputElement>) => {
+        const value = event.target.value;
+        setColor(value);
+        dispatch(setThemeMainColor(value));
+    };
+
+    const handleColorPickerChange = (color: string) => {
+        setColor(color);
+        dispatch(setThemeMainColor(color));
+    }
 
     return (
         <React.Fragment>
@@ -139,19 +151,21 @@ const FabSettings = () => {
                             </FormControl>
                         </ListItem>
                         <ListItem button key='mainColor'>
-                            <ListItemIcon>
-                                some
-                            </ListItemIcon>
-                            <ListItemText>
-                                some
-                            </ListItemText>
-                            <ListItemButton>
-                                btn
-                            </ListItemButton>
+                            <TextField
+                                label='Outlined secondary'
+                                color='primary'
+                                fullWidth={true}
+                                value={color}
+                                onChange={handleColorInputOnChange}
+                                focused
+                            />
                         </ListItem>
                     </List>
                     <Divider/>
-                    <ColorPicker/>
+                    <ColorPicker
+                        initColor={mainColorInit}
+                        handleColorChange={handleColorPickerChange}
+                    />
                 </Box>
             </Drawer>
         </React.Fragment>
