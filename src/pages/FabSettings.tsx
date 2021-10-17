@@ -176,17 +176,20 @@ const FabSettings = (props: any) => {
                         </ListItem>
                     </List>
                     <Divider/>
-                    <Button onClick={() => {
-                        if (fscreen.fullscreenEnabled) {
-                            if (props.fullScreenActive) {
-                                props.fullScreenExit();
+                    <Button
+                        variant='outlined'
+                        fullWidth={true}
+                        onClick={() => {
+                            if (fscreen.fullscreenEnabled) {
+                                if (props.fullScreenActive) {
+                                    props.fullScreenExit();
+                                } else {
+                                    props.fullScreenEnter();
+                                }
                             } else {
-                                props.fullScreenEnter();
+                                alert('can not')
                             }
-                        } else {
-                            alert('can not')
-                        }
-                    }}>
+                        }}>
                         btn
                     </Button>
                     <ColorPickerDialog
