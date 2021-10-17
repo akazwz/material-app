@@ -21,7 +21,8 @@
     "mainColor": "主色调",
     "secondColor": "次色调",
     "fullScreen": "全屏",
-    "exitFullScreen": "退出全屏"
+    "exitFullScreen": "退出全屏",
+    "notSupported": "浏览器不支持"
   },
   "colorPicker": {
     "colorPicker": "颜色选择",

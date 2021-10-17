@@ -191,7 +191,7 @@ const FabSettings = (props: any) => {
                                     props.fullScreenEnter();
                                 }
                             } else {
-                                alert('can not')
+                                alert(t('fabSettings.notSupported'));
                             }
                         }}
                         sx={{

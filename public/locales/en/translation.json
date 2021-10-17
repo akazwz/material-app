@@ -21,8 +21,8 @@
     "mainColor": "Main Color",
     "secondColor": "Second Color",
     "fullScreen": "Fullscreen",
-    "exitFullScreen": "Exit Fullscreen"
-
+    "exitFullScreen": "Exit Fullscreen",
+    "notSupported": "Browser Not Supported"
   },
   "colorPicker": {
     "colorPicker": "Color Picker",
