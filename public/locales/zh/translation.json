@@ -20,5 +20,10 @@
     "languages": "语言",
     "mainColor": "主色调",
     "secondColor": "次色调"
+  },
+  "colorPicker": {
+    "colorPicker": "颜色选择",
+    "color": "颜色",
+    "ok": "确定"
   }
 }

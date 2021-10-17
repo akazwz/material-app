@@ -6,8 +6,10 @@ import TextField from "@mui/material/TextField";
 import DialogActions from "@mui/material/DialogActions";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
+import {useTranslation} from "react-i18next";
 
 const ColorPickerDialog = (props: any) => {
+    const {t} = useTranslation();
     const {
         container,
         open,
@@ -25,7 +27,9 @@ const ColorPickerDialog = (props: any) => {
             maxWidth='xs'
             open={open}
         >
-            <DialogTitle color={primaryOrSecondary}>Color Picker</DialogTitle>
+            <DialogTitle color={primaryOrSecondary}>
+                {t('colorPicker.colorPicker')}
+            </DialogTitle>
             <DialogContent dividers sx={{
                 textAlign: 'center',
             }}>
@@ -34,7 +38,7 @@ const ColorPickerDialog = (props: any) => {
                     handleColorChange={handleColorPickerChange}
                 />
                 <TextField
-                    label='Outlined secondary'
+                    label={t('colorPicker.color')}
                     color={primaryOrSecondary}
                     value={color}
                     size='small'
@@ -45,7 +49,9 @@ const ColorPickerDialog = (props: any) => {
                 />
             </DialogContent>
             <DialogActions>
-                <Button color={primaryOrSecondary} onClick={handleConfirmBtn}>Save changes</Button>
+                <Button color={primaryOrSecondary} onClick={handleConfirmBtn}>
+                    {t('colorPicker.ok')}
+                </Button>
             </DialogActions>
         </Dialog>
     );

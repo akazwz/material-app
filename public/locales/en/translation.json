@@ -20,5 +20,10 @@
     "languages": "Languages",
     "mainColor": "Main Color",
     "secondColor": "Second Color"
+  },
+  "colorPicker": {
+    "colorPicker": "Color Picker",
+    "color": "Color",
+    "ok": "OK"
   }
 }
