@@ -14,6 +14,8 @@ import SettingsBrightnessOutlinedIcon from '@mui/icons-material/SettingsBrightne
 import TranslateOutlinedIcon from '@mui/icons-material/TranslateOutlined';
 import FormatColorFillOutlinedIcon from '@mui/icons-material/FormatColorFillOutlined';
 import PaletteOutlinedIcon from '@mui/icons-material/PaletteOutlined';
+import FullscreenIcon from '@mui/icons-material/Fullscreen';
+import FullscreenExitIcon from '@mui/icons-material/FullscreenExit';
 import Drawer from '@mui/material/Drawer';
 import {useTranslation} from 'react-i18next';
 import ListItemIcon from '@mui/material/ListItemIcon';
@@ -178,7 +180,9 @@ const FabSettings = (props: any) => {
                     <Divider/>
                     <Button
                         variant='outlined'
+                        size='large'
                         fullWidth={true}
+                        startIcon={props.fullScreenActive ? <FullscreenExitIcon/> : <FullscreenIcon/>}
                         onClick={() => {
                             if (fscreen.fullscreenEnabled) {
                                 if (props.fullScreenActive) {
@@ -189,8 +193,12 @@ const FabSettings = (props: any) => {
                             } else {
                                 alert('can not')
                             }
-                        }}>
-                        btn
+                        }}
+                        sx={{
+                            marginTop: '30px',
+                        }}
+                    >
+                        {props.fullScreenActive ? t('fabSettings.exitFullScreen') : t('fabSettings.fullScreen')}
                     </Button>
                     <ColorPickerDialog
                         container={ref.current}

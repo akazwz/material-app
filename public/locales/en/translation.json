@@ -19,7 +19,10 @@
     "themeMode": "Theme Mode",
     "languages": "Languages",
     "mainColor": "Main Color",
-    "secondColor": "Second Color"
+    "secondColor": "Second Color",
+    "fullScreen": "Fullscreen",
+    "exitFullScreen": "Exit Fullscreen"
+
   },
   "colorPicker": {
     "colorPicker": "Color Picker",
