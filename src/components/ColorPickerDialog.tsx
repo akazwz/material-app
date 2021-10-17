@@ -15,7 +15,8 @@ const ColorPickerDialog = (props: any) => {
         handleColorPickerChange,
         handleColorInputOnChange,
         handleConfirmBtn,
-        color
+        color,
+        primaryOrSecondary,
     } = props;
     return (
         <Dialog
@@ -24,7 +25,7 @@ const ColorPickerDialog = (props: any) => {
             maxWidth='xs'
             open={open}
         >
-            <DialogTitle color='primary'>Color Picker</DialogTitle>
+            <DialogTitle color={primaryOrSecondary}>Color Picker</DialogTitle>
             <DialogContent dividers sx={{
                 textAlign: 'center',
             }}>
@@ -34,15 +35,17 @@ const ColorPickerDialog = (props: any) => {
                 />
                 <TextField
                     label='Outlined secondary'
-                    color='primary'
+                    color={primaryOrSecondary}
                     value={color}
                     size='small'
-                    onChange={handleColorInputOnChange}
+                    onChange={(event) => {
+                        handleColorInputOnChange(event.target.value);
+                    }}
                     sx={{marginTop: 3}}
                 />
             </DialogContent>
             <DialogActions>
-                <Button onClick={handleConfirmBtn}>Save changes</Button>
+                <Button color={primaryOrSecondary} onClick={handleConfirmBtn}>Save changes</Button>
             </DialogActions>
         </Dialog>
     );

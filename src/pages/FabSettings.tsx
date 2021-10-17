@@ -1,4 +1,4 @@
-import React, {ChangeEvent, useRef, useState} from 'react';
+import React, {useRef, useState} from 'react';
 import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
 import AppBar from '@mui/material/AppBar';
 import Fab from '@mui/material/Fab';
@@ -14,22 +14,17 @@ import SettingsBrightnessOutlinedIcon from '@mui/icons-material/SettingsBrightne
 import TranslateOutlinedIcon from '@mui/icons-material/TranslateOutlined';
 import FormatColorFillOutlinedIcon from '@mui/icons-material/FormatColorFillOutlined';
 import PaletteOutlinedIcon from '@mui/icons-material/PaletteOutlined';
-import DialogTitle from '@mui/material/DialogTitle';
-import DialogContent from '@mui/material/DialogContent';
-import DialogActions from '@mui/material/DialogActions';
-import Dialog from '@mui/material/Dialog';
 import Drawer from '@mui/material/Drawer';
 import {useTranslation} from 'react-i18next';
 import ListItemIcon from '@mui/material/ListItemIcon';
-import TextField from '@mui/material/TextField';
 import ListItemText from '@mui/material/ListItemText';
 // @ts-ignore
 import fscreen from 'fscreen';
 import {useAppDispatch, useAppSelector} from '../hooks/hooks';
-import {setThemeMode, setThemeMainColor, theme} from '../redux/theme';
+import {setThemeMode, setThemeMainColor, theme, setThemeSecondColor} from '../redux/theme';
 import MuiSwitchThemeMode from '../components/MuiSwitchThemeMode';
 import MuiSwitchLanguage from '../components/MuiSwitchLanguage';
-import ColorPicker from '../components/ColorPicker';
+import ColorPickerDialog from "../components/ColorPickerDialog";
 
 const FabSettings = (props: any) => {
     const {t, i18n} = useTranslation();
@@ -37,12 +32,16 @@ const FabSettings = (props: any) => {
     if (!lang) {
         lang = 'zh';
     }
+    const ref = useRef(null);
     const [drawerOpen, setDrawerOpen] = useState(false);
     const themeValue = useAppSelector(theme);
     let mainColorInit = themeValue.theme.mainColor;
+    let secondColorInit = themeValue.theme.secondColor;
     let themeModeInit = themeValue.theme.mode;
-    const [color, setColor] = useState(mainColorInit);
-    const [dialogColorPicker, setDialogColorPicker] = useState(false);
+    const [mainColor, setMainColor] = useState(mainColorInit);
+    const [secondColor, setSecondColor] = useState(secondColorInit);
+    const [dialogColorPickerMain, setDialogColorPickerMain] = useState(false);
+    const [dialogColorPickerSecond, setDialogColorPickerSecond] = useState(false);
     const [switchDarkMode, setSwitchDarkMode] = useState(themeModeInit === 'dark');
     const [switchLangEn, setSwitchLangEn] = useState(lang === 'en');
 
@@ -56,22 +55,34 @@ const FabSettings = (props: any) => {
         setDrawerOpen(false);
     }
 
-    const handleColorInputOnChange = (event: ChangeEvent<HTMLInputElement>) => {
-        const value = event.target.value;
-        setColor(value);
+    const handleMainColorInputOnChange = (value: string) => {
+        setMainColor(value);
         if (value.length === 7) {
             dispatch(setThemeMainColor(value));
             localStorage.setItem('mainColor', value);
         }
     };
 
-    const handleColorPickerChange = (color: string) => {
-        setColor(color);
+    const handleMainColorPickerChange = (color: string) => {
+        setMainColor(color);
         dispatch(setThemeMainColor(color));
         localStorage.setItem('mainColor', color);
     }
 
-    const ref = useRef(null);
+    const handleSecondColorInputOnChange = (value: string) => {
+        setSecondColor(value);
+        if (value.length === 7) {
+            dispatch(setThemeSecondColor(value));
+            localStorage.setItem('secondColor', value);
+        }
+    };
+
+    const handleSecondColorPickerChange = (color: string) => {
+        setSecondColor(color);
+        dispatch(setThemeSecondColor(color));
+        localStorage.setItem('secondColor', color);
+    }
+
     return (
         <div ref={ref}>
             <AppBar
@@ -146,19 +157,19 @@ const FabSettings = (props: any) => {
                             <ListItemText primary={t('fabSettings.mainColor')}/>
                             <IconButton
                                 aria-label='toggle password visibility'
-                                onClick={() => setDialogColorPicker(true)}
+                                onClick={() => setDialogColorPickerMain(true)}
                             >
                                 <PaletteOutlinedIcon color='primary'/>
                             </IconButton>
                         </ListItem>
-                        <ListItem button key='mainColor'>
+                        <ListItem button key='secondColor'>
                             <ListItemIcon>
                                 <ColorizeIcon/>
                             </ListItemIcon>
                             <ListItemText id='switch-list-label-wifi' primary={t('fabSettings.secondColor')}/>
                             <IconButton
                                 aria-label='toggle password visibility'
-                                onClick={() => setDialogColorPicker(true)}
+                                onClick={() => setDialogColorPickerSecond(true)}
                             >
                                 <PaletteOutlinedIcon color='secondary'/>
                             </IconButton>
@@ -178,33 +189,30 @@ const FabSettings = (props: any) => {
                     }}>
                         btn
                     </Button>
-                    <Dialog
+                    <ColorPickerDialog
                         container={ref.current}
-                        sx={{'& .MuiDialog-paper': {width: '80%', maxHeight: 435}}}
-                        maxWidth='xs'
-                        open={dialogColorPicker}
-                    >
-                        <DialogTitle color='primary'>Color Picker</DialogTitle>
-                        <DialogContent dividers sx={{
-                            textAlign: 'center',
-                        }}>
-                            <ColorPicker
-                                initColor={mainColorInit}
-                                handleColorChange={handleColorPickerChange}
-                            />
-                            <TextField
-                                label='Outlined secondary'
-                                color='primary'
-                                value={color}
-                                size='small'
-                                onChange={handleColorInputOnChange}
-                                sx={{marginTop: 3}}
-                            />
-                        </DialogContent>
-                        <DialogActions>
-                            <Button onClick={() => setDialogColorPicker(false)}>Save changes</Button>
-                        </DialogActions>
-                    </Dialog>
+                        open={dialogColorPickerMain}
+                        initColor={mainColorInit}
+                        handleColorPickerChange={handleMainColorPickerChange}
+                        handleColorInputOnChange={handleMainColorInputOnChange}
+                        handleConfirmBtn={() => {
+                            setDialogColorPickerMain(false);
+                        }}
+                        color={mainColor}
+                        primaryOrSecondary='primary'
+                    />
+                    <ColorPickerDialog
+                        container={ref.current}
+                        open={dialogColorPickerSecond}
+                        initColor={secondColorInit}
+                        handleColorPickerChange={handleSecondColorPickerChange}
+                        handleColorInputOnChange={handleSecondColorInputOnChange}
+                        handleConfirmBtn={() => {
+                            setDialogColorPickerSecond(false);
+                        }}
+                        color={secondColor}
+                        primaryOrSecondary='secondary'
+                    />
                 </Box>
             </Drawer>
         </div>
