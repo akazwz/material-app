@@ -11,8 +11,11 @@ import FabSettings from "./pages/FabSettings";
 import Backdrop from '@mui/material/Backdrop/Backdrop';
 import {FullScreen, useFullScreenHandle} from 'react-full-screen';
 import CircularProgress from '@mui/material/CircularProgress/CircularProgress';
-import {theme} from "./redux/theme";
+import {theme} from './redux/theme';
+import Dashboard from './pages/Dashboard';
 import './App.css';
+import {auth} from "./redux/auth";
+import {store} from "./redux/store";
 
 function App() {
     const themeValue = useAppSelector(theme);
@@ -49,7 +52,14 @@ function App() {
             <ThemeProvider theme={themeCustom}>
                 <React.Fragment>
                     <FullScreen handle={handle}>
-                        <SignInSide />
+                        <Switch>
+                            <Route path="/sign-in">
+                                <SignInSide />
+                            </Route>
+                            <Route path="/">
+                                <Dashboard />
+                            </Route>
+                        </Switch>
                         <FabSettings
                             fullScreenEnter={handle.enter}
                             fullScreenExit={handle.exit}

@@ -1,8 +1,19 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 
-const token = localStorage.getItem('token');
-const expiredAt = localStorage.getItem('expired_at');
-const username = localStorage.getItem('username');
+let token = localStorage.getItem('token');
+let expiredAt = localStorage.getItem('expired_at');
+let username = localStorage.getItem('username');
+
+if (!token) {
+    token = 'token';
+}
+if (!expiredAt) {
+    expiredAt = 'forever';
+}
+
+if (!username) {
+    username = 'zwz';
+}
 
 export const authSlice = createSlice({
     name: 'auth',

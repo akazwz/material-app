@@ -8,10 +8,11 @@ import Typography from '@mui/material/Typography';
 import Avatar from '@mui/material/Avatar';
 import LoadingButton from '@mui/lab/LoadingButton';
 import InputAdornment from '@mui/material/InputAdornment';
-import CircularProgress from '@mui/material/CircularProgress';
 import IconButton from '@mui/material/IconButton/IconButton';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
+import CircularProgress from '@mui/material/CircularProgress';
+import {useHistory} from 'react-router-dom';
 import {useTranslation} from 'react-i18next';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
@@ -20,11 +21,11 @@ import Checkbox from '@mui/material/Checkbox';
 import Copyright from '../components/Copyright';
 import {signIn, AxiosResponse} from '../api/api';
 import {useAppDispatch} from '../hooks/hooks';
-import {setExpiredAt, setToken} from "../redux/auth";
-
-const dispatch = useAppDispatch();
+import {setExpiredAt, setToken} from '../redux/auth';
 
 const SignInSide = () => {
+    let history = useHistory();
+    const dispatch = useAppDispatch();
     const {t} = useTranslation();
     const [loading, setLoading] = useState(false);
     const [phoneError, setPhoneError] = useState(false);
@@ -37,6 +38,7 @@ const SignInSide = () => {
 
     // login
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+
         event.preventDefault();
         setLoading(true);
         const dataFormData = new FormData(event.currentTarget);
@@ -64,11 +66,11 @@ const SignInSide = () => {
                 dispatch(setToken(token));
                 dispatch(setExpiredAt(expires_at));
                 setLoading(false);
-                alert('success');
+                history.push('/dashboard');
             })
             .catch((err: any) => {
                 setLoading(false);
-                alert('error:' + err);
+                history.push('/dashboard');
             })
     };
 
