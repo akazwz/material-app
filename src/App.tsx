@@ -1,21 +1,15 @@
 import React, {Suspense} from 'react';
-import {
-    Switch,
-    Route,
-    Link
-} from 'react-router-dom';
+import {Switch, Route} from 'react-router-dom';
+import {FullScreen, useFullScreenHandle} from 'react-full-screen';
+import Backdrop from '@mui/material/Backdrop/Backdrop';
+import CircularProgress from '@mui/material/CircularProgress/CircularProgress';
 import {createTheme, ThemeProvider} from '@mui/material/styles';
 import {useAppSelector} from './hooks/hooks';
 import SignInSide from './pages/SighInSide';
-import FabSettings from "./pages/FabSettings";
-import Backdrop from '@mui/material/Backdrop/Backdrop';
-import {FullScreen, useFullScreenHandle} from 'react-full-screen';
-import CircularProgress from '@mui/material/CircularProgress/CircularProgress';
+import FabSettings from './pages/FabSettings';
 import {theme} from './redux/theme';
 import Dashboard from './pages/Dashboard';
 import './App.css';
-import {auth} from "./redux/auth";
-import {store} from "./redux/store";
 
 function App() {
     const themeValue = useAppSelector(theme);
