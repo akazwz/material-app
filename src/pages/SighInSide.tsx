@@ -17,6 +17,7 @@ import TextField from '@mui/material/TextField';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
 import Copyright from '../components/Copyright';
+import {signIn} from "../api/api";
 
 const SignInSide = () => {
     const {t} = useTranslation();
@@ -36,6 +37,13 @@ const SignInSide = () => {
             email: data.get('phone'),
             password: data.get('password'),
         });
+        signIn(data)
+            .then((res: any) => {
+                console.log(res);
+            })
+            .catch((err: any) => {
+                console.log(err);
+            })
     };
 
     // phone on blur
@@ -134,9 +142,9 @@ const SignInSide = () => {
 
     return (
         <Grid container component='main' sx={{height: '100vh'}}>
-            <CssBaseline/>
+            <CssBaseline />
             {/*side image*/}
-            <GridImg url='https://source.unsplash.com/random'/>
+            <GridImg url='https://source.unsplash.com/random' />
             <Grid
                 item
                 xs={12}
@@ -156,7 +164,7 @@ const SignInSide = () => {
                     }}
                 >
                     <Avatar sx={{m: 1, bgcolor: 'secondary.main'}}>
-                        <LockOutlinedIcon/>
+                        <LockOutlinedIcon />
                     </Avatar>
                     <Typography component='h1' variant='h5'>
                         {t('signInSide.signIn')}
@@ -195,8 +203,8 @@ const SignInSide = () => {
                                         onClick={handleToggleShowPassword}
                                         onMouseDown={handleMouseDownPassword}
                                     >
-                                        {password.length > 1 ? showPassword ? <VisibilityOff/> :
-                                            <VisibilityIcon/> : null}
+                                        {password.length > 1 ? showPassword ? <VisibilityOff /> :
+                                            <VisibilityIcon /> : null}
                                     </IconButton>
                                 </InputAdornment>,
                             }}
@@ -207,7 +215,7 @@ const SignInSide = () => {
                             onChange={handlePwdChange}
                         />
                         <FormControlLabel
-                            control={<Checkbox value='remember' color='primary'/>}
+                            control={<Checkbox value='remember' color='primary' />}
                             label={t('signInSide.rememberMe')}
                         />
                         <Button
@@ -230,7 +238,7 @@ const SignInSide = () => {
                                 </Link>
                             </Grid>
                         </Grid>
-                        <Copyright sx={{mt: 5}}/>
+                        <Copyright sx={{mt: 5}} />
                     </Box>
                 </Box>
             </Grid>
