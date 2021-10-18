@@ -6,8 +6,9 @@ import Grid from '@mui/material/Grid';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Avatar from '@mui/material/Avatar';
-import Button from '@mui/material/Button';
+import LoadingButton from '@mui/lab/LoadingButton';
 import InputAdornment from '@mui/material/InputAdornment';
+import CircularProgress from '@mui/material/CircularProgress';
 import IconButton from '@mui/material/IconButton/IconButton';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
@@ -17,10 +18,11 @@ import TextField from '@mui/material/TextField';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
 import Copyright from '../components/Copyright';
-import {signIn} from "../api/api";
+import {signIn, AxiosResponse} from '../api/api';
 
 const SignInSide = () => {
     const {t} = useTranslation();
+    const [loading, setLoading] = useState(false);
     const [phoneError, setPhoneError] = useState(false);
     const [phone, setPhone] = useState('');
     const [phoneHelper, setPhoneHelper] = useState('');
@@ -29,20 +31,38 @@ const SignInSide = () => {
     const [pwdHelper, setPwdHelper] = useState('');
     const [showPassword, setShowPassword] = useState(false);
 
-    // submit
+    // login
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        const data = new FormData(event.currentTarget);
-        console.log({
-            email: data.get('phone'),
-            password: data.get('password'),
-        });
-        signIn(data)
-            .then((res: any) => {
+        setLoading(true);
+        const dataFormData = new FormData(event.currentTarget);
+        const dataJson = {
+            username: dataFormData.get('phone'),
+            password: dataFormData.get('password'),
+        }
+        signIn(dataJson)
+            .then((res: AxiosResponse) => {
+                if (res?.status !== 201) {
+                    setLoading(false);
+                    alert('error');
+                    return;
+                }
                 console.log(res);
+                const {code, data, msg} = res?.data;
+                const {expires_at, token} = data;
+                if (code !== 2000) {
+                    setLoading(false);
+                    alert(msg);
+                    return;
+                }
+                localStorage.setItem('expires_at', expires_at);
+                localStorage.setItem('token', token);
+                setLoading(false);
+                alert('success');
             })
             .catch((err: any) => {
-                console.log(err);
+                setLoading(false);
+                alert('error:' + err);
             })
     };
 
@@ -218,14 +238,16 @@ const SignInSide = () => {
                             control={<Checkbox value='remember' color='primary' />}
                             label={t('signInSide.rememberMe')}
                         />
-                        <Button
+                        <LoadingButton
                             type='submit'
                             fullWidth
                             variant='contained'
+                            loading={loading}
+                            loadingIndicator={<CircularProgress size={27} />}
                             sx={{mt: 3, mb: 2}}
                         >
                             {t('signInSide.signInBtn')}
-                        </Button>
+                        </LoadingButton>
                         <Grid container>
                             <Grid item xs>
                                 <Link href='#' variant='body2'>
