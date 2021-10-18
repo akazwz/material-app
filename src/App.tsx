@@ -1,4 +1,9 @@
 import React, {Suspense} from 'react';
+import {
+    Switch,
+    Route,
+    Link
+} from 'react-router-dom';
 import {createTheme, ThemeProvider} from '@mui/material/styles';
 import {useAppSelector} from './hooks/hooks';
 import SignInSide from './pages/SighInSide';
@@ -38,20 +43,19 @@ function App() {
             <Backdrop
                 open={true}
             >
-                <CircularProgress color='inherit'/>
+                <CircularProgress color='inherit' />
             </Backdrop>
         }>
             <ThemeProvider theme={themeCustom}>
                 <React.Fragment>
                     <FullScreen handle={handle}>
-                        <SignInSide/>
+                        <SignInSide />
                         <FabSettings
                             fullScreenEnter={handle.enter}
                             fullScreenExit={handle.exit}
                             fullScreenActive={handle.active}
                         />
                     </FullScreen>
-
                 </React.Fragment>
             </ThemeProvider>
         </Suspense>

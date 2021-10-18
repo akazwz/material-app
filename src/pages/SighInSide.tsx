@@ -19,6 +19,10 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
 import Copyright from '../components/Copyright';
 import {signIn, AxiosResponse} from '../api/api';
+import {useAppDispatch} from '../hooks/hooks';
+import {setExpiredAt, setToken} from "../redux/auth";
+
+const dispatch = useAppDispatch();
 
 const SignInSide = () => {
     const {t} = useTranslation();
@@ -57,6 +61,8 @@ const SignInSide = () => {
                 }
                 localStorage.setItem('expires_at', expires_at);
                 localStorage.setItem('token', token);
+                dispatch(setToken(token));
+                dispatch(setExpiredAt(expires_at));
                 setLoading(false);
                 alert('success');
             })
