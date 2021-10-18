@@ -1,12 +1,12 @@
 import React from 'react';
-import DialogTitle from "@mui/material/DialogTitle";
-import DialogContent from "@mui/material/DialogContent";
-import ColorPicker from "./ColorPicker";
-import TextField from "@mui/material/TextField";
-import DialogActions from "@mui/material/DialogActions";
-import Button from "@mui/material/Button";
-import Dialog from "@mui/material/Dialog";
-import {useTranslation} from "react-i18next";
+import DialogTitle from '@mui/material/DialogTitle';
+import DialogContent from '@mui/material/DialogContent';
+import TextField from '@mui/material/TextField';
+import DialogActions from '@mui/material/DialogActions';
+import Button from '@mui/material/Button';
+import Dialog from '@mui/material/Dialog';
+import {useTranslation} from 'react-i18next';
+import ColorPicker from './ColorPicker';
 
 const ColorPickerDialog = (props: any) => {
     const {t} = useTranslation();

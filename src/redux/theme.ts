@@ -9,6 +9,7 @@ if (!mainColor) {
 if (!secondColor) {
     secondColor = '#ab47bc';
 }
+
 let mode: 'light' | 'dark';
 
 switch (themeType) {

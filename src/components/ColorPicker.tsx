@@ -1,11 +1,10 @@
 import React, {useState} from 'react';
 import Container from '@mui/material/Container/Container';
 import CssBaseline from '@mui/material/CssBaseline/CssBaseline';
-import {HexColorPicker} from "react-colorful";
+import {HexColorPicker} from 'react-colorful';
 
 const ColorPicker = (props: any) => {
-    const initColor = props.initColor;
-    const handleColorChange = props.handleColorChange;
+    const {initColor, handleColorChange} = props;
     const [color, setColor] = useState(initColor);
     const handleChange = (color: string) => {
         setColor(color);
@@ -13,7 +12,7 @@ const ColorPicker = (props: any) => {
     }
     return (
         <React.Fragment>
-            <CssBaseline/>
+            <CssBaseline />
             <Container style={{
                 backgroundColor: 'transparent',
             }}>

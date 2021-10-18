@@ -17,16 +17,16 @@ import PaletteOutlinedIcon from '@mui/icons-material/PaletteOutlined';
 import FullscreenIcon from '@mui/icons-material/Fullscreen';
 import FullscreenExitIcon from '@mui/icons-material/FullscreenExit';
 import Drawer from '@mui/material/Drawer';
-import {useTranslation} from 'react-i18next';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
+import {useTranslation} from 'react-i18next';
 // @ts-ignore
 import fscreen from 'fscreen';
 import {useAppDispatch, useAppSelector} from '../hooks/hooks';
 import {setThemeMode, setThemeMainColor, theme, setThemeSecondColor} from '../redux/theme';
 import MuiSwitchThemeMode from '../components/MuiSwitchThemeMode';
 import MuiSwitchLanguage from '../components/MuiSwitchLanguage';
-import ColorPickerDialog from "../components/ColorPickerDialog";
+import ColorPickerDialog from '../components/ColorPickerDialog';
 
 const FabSettings = (props: any) => {
     const {t, i18n} = useTranslation();
@@ -34,6 +34,7 @@ const FabSettings = (props: any) => {
     if (!lang) {
         lang = 'zh';
     }
+    // use for container
     const ref = useRef(null);
     const [drawerOpen, setDrawerOpen] = useState(false);
     const themeValue = useAppSelector(theme);
@@ -100,7 +101,7 @@ const FabSettings = (props: any) => {
                         right: 16,
                     }}
                 >
-                    <SettingsOutlinedIcon onClick={handleSettingOnClick}/>
+                    <SettingsOutlinedIcon onClick={handleSettingOnClick} />
                 </Fab>
             </AppBar>
             <Drawer
@@ -122,9 +123,9 @@ const FabSettings = (props: any) => {
                     >
                         <ListItem button key='themeMode'>
                             <ListItemIcon>
-                                <SettingsBrightnessOutlinedIcon/>
+                                <SettingsBrightnessOutlinedIcon />
                             </ListItemIcon>
-                            <ListItemText primary={t('fabSettings.themeMode')}/>
+                            <ListItemText primary={t('fabSettings.themeMode')} />
                             <MuiSwitchThemeMode checked={switchDarkMode} onChange={() => {
                                 if (!switchDarkMode) {
                                     dispatch(setThemeMode('dark'));
@@ -134,13 +135,13 @@ const FabSettings = (props: any) => {
                                     localStorage.setItem('themeMode', 'light');
                                 }
                                 setSwitchDarkMode(!switchDarkMode);
-                            }}/>
+                            }} />
                         </ListItem>
                         <ListItem button key='languages'>
                             <ListItemIcon>
-                                <TranslateOutlinedIcon/>
+                                <TranslateOutlinedIcon />
                             </ListItemIcon>
-                            <ListItemText primary={t('fabSettings.languages')}/>
+                            <ListItemText primary={t('fabSettings.languages')} />
                             <MuiSwitchLanguage checked={switchLangEn} onChange={() => {
                                 if (!switchLangEn) {
                                     localStorage.setItem('language', 'en');
@@ -150,39 +151,39 @@ const FabSettings = (props: any) => {
                                     i18n.changeLanguage('zh').then();
                                 }
                                 setSwitchLangEn(!switchLangEn);
-                            }}/>
+                            }} />
                         </ListItem>
                         <ListItem button key='mainColor'>
                             <ListItemIcon>
-                                <FormatColorFillOutlinedIcon/>
+                                <FormatColorFillOutlinedIcon />
                             </ListItemIcon>
-                            <ListItemText primary={t('fabSettings.mainColor')}/>
+                            <ListItemText primary={t('fabSettings.mainColor')} />
                             <IconButton
                                 aria-label='toggle password visibility'
                                 onClick={() => setDialogColorPickerMain(true)}
                             >
-                                <PaletteOutlinedIcon color='primary'/>
+                                <PaletteOutlinedIcon color='primary' />
                             </IconButton>
                         </ListItem>
                         <ListItem button key='secondColor'>
                             <ListItemIcon>
-                                <ColorizeIcon/>
+                                <ColorizeIcon />
                             </ListItemIcon>
-                            <ListItemText id='switch-list-label-wifi' primary={t('fabSettings.secondColor')}/>
+                            <ListItemText id='switch-list-label-wifi' primary={t('fabSettings.secondColor')} />
                             <IconButton
                                 aria-label='toggle password visibility'
                                 onClick={() => setDialogColorPickerSecond(true)}
                             >
-                                <PaletteOutlinedIcon color='secondary'/>
+                                <PaletteOutlinedIcon color='secondary' />
                             </IconButton>
                         </ListItem>
                     </List>
-                    <Divider/>
+                    <Divider />
                     <Button
                         variant='outlined'
                         size='large'
                         fullWidth={true}
-                        startIcon={props.fullScreenActive ? <FullscreenExitIcon/> : <FullscreenIcon/>}
+                        startIcon={props.fullScreenActive ? <FullscreenExitIcon /> : <FullscreenIcon />}
                         onClick={() => {
                             if (fscreen.fullscreenEnabled) {
                                 if (props.fullScreenActive) {

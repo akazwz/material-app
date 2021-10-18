@@ -4,7 +4,7 @@ import {useAppSelector} from './hooks/hooks';
 import SignInSide from './pages/SighInSide';
 import FabSettings from "./pages/FabSettings";
 import Backdrop from '@mui/material/Backdrop/Backdrop';
-import {FullScreen, useFullScreenHandle} from "react-full-screen";
+import {FullScreen, useFullScreenHandle} from 'react-full-screen';
 import CircularProgress from '@mui/material/CircularProgress/CircularProgress';
 import {theme} from "./redux/theme";
 import './App.css';
