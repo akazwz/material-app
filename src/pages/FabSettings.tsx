@@ -96,7 +96,7 @@ const FabSettings = (props: any) => {
                     color='primary'
                     aria-label='add'
                     style={{
-                        position: 'absolute',
+                        position: 'fixed',
                         bottom: 16,
                         right: 16,
                     }}
