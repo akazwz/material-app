@@ -11,6 +11,7 @@ import {theme} from './redux/theme';
 import Dashboard from './pages/Dashboard';
 import './App.css';
 import {auth} from "./redux/auth";
+import PrivateRoute from "./route/PrivateRoute";
 
 function App() {
     const themeValue = useAppSelector(theme);
@@ -51,12 +52,9 @@ function App() {
                             <Route path="/sign-in">
                                 <SignInSide />
                             </Route>
-                            <Route path="/dashboard">
+                            <PrivateRoute path="/dashboard">
                                 <Dashboard />
-                            </Route>
-                            <Route path="/">
-                                <Redirect to="/dashboard" />
-                            </Route>
+                            </PrivateRoute>
                         </Switch>
                         <FabSettings
                             fullScreenEnter={handle.enter}
