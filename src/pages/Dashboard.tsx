@@ -81,7 +81,7 @@ const Dashboard = () => {
                         component='div'
                         sx={{display: {xs: 'none', sm: 'block'}}}
                     >
-                        Material App
+                        {authValue.auth.user.username}
                     </Typography>
                     <MyAppBarSearch/>
                     <Box sx={{flexGrow: 1}}/>

@@ -24,7 +24,7 @@ import Collapse from '@mui/material/Collapse';
 import Copyright from '../components/Copyright';
 import {signIn, AxiosResponse} from '../api/api';
 import {useAppDispatch} from '../hooks/hooks';
-import {setExpiredAt, setToken} from '../redux/auth';
+import {setExpiredAt, setToken, setUser} from '../redux/auth';
 
 const SignInSide = () => {
     let history = useHistory();
@@ -79,8 +79,15 @@ const SignInSide = () => {
                 }
                 localStorage.setItem('expires_at', expires_at);
                 localStorage.setItem('token', token);
+                localStorage.setItem('user', user);
                 dispatch(setToken(token));
                 dispatch(setExpiredAt(expires_at));
+                dispatch(setUser({
+                    header_img: header_img,
+                    nick_name: nick_name,
+                    username: username,
+                    authority_id: authority_id,
+                }));
                 setLoading(false);
                 history.push('/dashboard');
             })
