@@ -10,11 +10,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import Typography from "@mui/material/Typography";
 import {Drawer, useMediaQuery} from "@mui/material";
 import {styled, useTheme} from '@mui/material/styles';
-import MuiAppBar, {AppBarProps as MuiAppBarProps} from '@mui/material/AppBar';
 import List from '@mui/material/List';
-import Divider from '@mui/material/Divider';
-import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
-import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import ListItem from '@mui/material/ListItem';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
@@ -53,21 +49,29 @@ const Dashboard = () => {
         setOpen(false);
     };
 
-    const DrawerHeader = styled('div')(({theme}) => ({
+    const DrawerHeader = styled('div')(() => ({
         display: 'flex',
-        color: 'primary',
         alignItems: 'center',
-        padding: theme.spacing(0, 1),
+        padding: theme.spacing(0, 0),
         ...theme.mixins.toolbar,
         justifyContent: 'center',
+        backgroundColor: theme.palette.primary.main,
     }));
 
     return (
         <Box sx={{display: 'flex'}} ref={ref}>
             <CssBaseline />
             <AppBar
+                color='default'
                 position="fixed"
-                sx={{width: {md: `calc(100% - ${drawerWidth}px)`}, ml: {md: `${drawerWidth}px`}}}
+                enableColorOnDark={true}
+                sx={{
+                    backgroundColor: 'primary.main',
+                    width: {md: `calc(100% - ${drawerWidth}px)`},
+                    ml: {md: `${drawerWidth}px`},
+                    padding: 0,
+                    boxShadow: 0,
+                }}
             >
                 <Toolbar>
                     <IconButton
@@ -93,6 +97,7 @@ const Dashboard = () => {
                     keepMounted: !upMd, // Better open performance on mobile.
                 }}
                 sx={{
+
                     width: drawerWidth,
                     flexShrink: 0,
                     '& .MuiDrawer-paper': {boxSizing: 'border-box', width: drawerWidth},
@@ -116,7 +121,8 @@ const Dashboard = () => {
                 </List>
             </Drawer>
         </Box>
-    );
+    )
+        ;
 };
 
 export default Dashboard;
