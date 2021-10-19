@@ -1,5 +1,5 @@
 import React, {Suspense} from 'react';
-import {Switch, Route, Redirect} from 'react-router-dom';
+import {Switch, Route} from 'react-router-dom';
 import {FullScreen, useFullScreenHandle} from 'react-full-screen';
 import Backdrop from '@mui/material/Backdrop/Backdrop';
 import CircularProgress from '@mui/material/CircularProgress/CircularProgress';
@@ -9,9 +9,9 @@ import SignInSide from './pages/SighInSide';
 import FabSettings from './pages/FabSettings';
 import {theme} from './redux/theme';
 import Dashboard from './pages/Dashboard';
+import PrivateRoute from './route/PrivateRoute';
+import HomePage from './pages/HomePage';
 import './App.css';
-import {auth} from "./redux/auth";
-import PrivateRoute from "./route/PrivateRoute";
 
 function App() {
     const themeValue = useAppSelector(theme);
@@ -42,19 +42,22 @@ function App() {
             <Backdrop
                 open={true}
             >
-                <CircularProgress color='inherit' />
+                <CircularProgress color='inherit'/>
             </Backdrop>
         }>
             <ThemeProvider theme={themeCustom}>
                 <React.Fragment>
                     <FullScreen handle={handle}>
                         <Switch>
-                            <Route path="/sign-in">
-                                <SignInSide />
+                            <Route path='/sign-in'>
+                                <SignInSide/>
                             </Route>
-                            <PrivateRoute path="/dashboard/">
-                                <Dashboard />
+                            <PrivateRoute path='/dashboard/'>
+                                <Dashboard/>
                             </PrivateRoute>
+                            <Route path='/'>
+                                <HomePage/>
+                            </Route>
                         </Switch>
                         <FabSettings
                             fullScreenEnter={handle.enter}
