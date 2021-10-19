@@ -20,6 +20,8 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import InboxIcon from '@mui/icons-material/MoveToInbox';
 import MailIcon from '@mui/icons-material/Mail';
+import Avatar from "@mui/material/Avatar";
+import logo from '../logo.png';
 
 const drawerWidth = 240;
 
@@ -36,7 +38,7 @@ const Dashboard = () => {
     useEffect(() => {
         variant = upMd ? 'permanent' : 'temporary';
         setOpen(upMd);
-        //@ts-ignore
+        // @ts-ignore
         setDrawerVariant(variant);
     }, [upMd]);
 
@@ -57,7 +59,7 @@ const Dashboard = () => {
         alignItems: 'center',
         padding: theme.spacing(0, 1),
         ...theme.mixins.toolbar,
-        justifyContent: 'flex-end',
+        justifyContent: 'center',
     }));
 
     return (
@@ -74,10 +76,10 @@ const Dashboard = () => {
                         edge="start"
                         onClick={handleDrawerOpen}
                     >
-                        {open ? <MenuIcon /> : <MenuIcon />}
+                        {open ? null : <MenuIcon />}
                     </IconButton>
                     <Typography>
-                        Persistent drawer
+                        {open ? 'Open' : 'Not Open'}
                     </Typography>
                 </Toolbar>
             </AppBar>
@@ -97,6 +99,10 @@ const Dashboard = () => {
                 }}
             >
                 <DrawerHeader>
+                    <Avatar alt="log" src={logo} sx={{width: 48, height: 48}} />
+                    <Typography>
+                        Material App
+                    </Typography>
                 </DrawerHeader>
                 <List sx={{width: '100%'}}>
                     {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
