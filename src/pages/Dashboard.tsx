@@ -1,4 +1,4 @@
-import React, {useRef, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import CssBaseline from '@mui/material/CssBaseline';
 import {useAppSelector} from "../hooks/hooks";
 import {auth} from '../redux/auth';
@@ -21,26 +21,39 @@ import ListItemText from '@mui/material/ListItemText';
 import InboxIcon from '@mui/icons-material/MoveToInbox';
 import MailIcon from '@mui/icons-material/Mail';
 
+const drawerWidth = 240;
+
 const Dashboard = () => {
     const authValue = useAppSelector(auth);
     const ref = useRef(null);
     const theme = useTheme();
     const upMd = useMediaQuery(theme.breakpoints.up('md'));
     const [open, setOpen] = useState(false);
-    let initVariant: 'temporary' | 'permanent' | 'persistent' | 'undefined'
-    initVariant = 'permanent';
-    const [drawerVariant, setDrawerVariant] = useState(initVariant);
+    let variant: 'temporary' | 'permanent';
+    variant = 'temporary';
+    const [drawerVariant, setDrawerVariant] = useState(variant);
+
+    useEffect(() => {
+        variant = upMd ? 'permanent' : 'temporary';
+        setOpen(upMd);
+        //@ts-ignore
+        setDrawerVariant(variant);
+    }, [upMd]);
 
     const handleDrawerOpen = () => {
         setOpen(true);
     };
 
     const handleDrawerClose = () => {
+        variant = 'temporary';
+        // @ts-ignore
+        setDrawerVariant(variant);
         setOpen(false);
     };
 
     const DrawerHeader = styled('div')(({theme}) => ({
         display: 'flex',
+        color: 'primary',
         alignItems: 'center',
         padding: theme.spacing(0, 1),
         ...theme.mixins.toolbar,
@@ -50,17 +63,18 @@ const Dashboard = () => {
     return (
         <Box sx={{display: 'flex'}} ref={ref}>
             <CssBaseline />
-            <AppBar position="fixed">
+            <AppBar
+                position="fixed"
+                sx={{width: {md: `calc(100% - ${drawerWidth}px)`}, ml: {md: `${drawerWidth}px`}}}
+            >
                 <Toolbar>
                     <IconButton
                         color="inherit"
                         aria-label="open drawer"
                         edge="start"
                         onClick={handleDrawerOpen}
-                        // drawer open, hide the icon button
-                        sx={{mr: 2, ...(open && {display: 'none'})}}
                     >
-                        <MenuIcon />
+                        {open ? <MenuIcon /> : <MenuIcon />}
                     </IconButton>
                     <Typography>
                         Persistent drawer
@@ -72,19 +86,28 @@ const Dashboard = () => {
                 variant={drawerVariant}
                 anchor="left"
                 open={open}
+                onClose={upMd ? undefined : handleDrawerClose}
                 ModalProps={{
                     keepMounted: !upMd, // Better open performance on mobile.
                 }}
                 sx={{
-                    width: 200,
+                    width: drawerWidth,
                     flexShrink: 0,
+                    '& .MuiDrawer-paper': {boxSizing: 'border-box', width: drawerWidth},
                 }}
             >
                 <DrawerHeader>
-                    <IconButton onClick={handleDrawerClose}>
-                        {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
-                    </IconButton>
                 </DrawerHeader>
+                <List sx={{width: '100%'}}>
+                    {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
+                        <ListItem button key={text} sx={{width: '100%'}}>
+                            <ListItemIcon>
+                                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+                            </ListItemIcon>
+                            <ListItemText primary={text} />
+                        </ListItem>
+                    ))}
+                </List>
             </Drawer>
         </Box>
     );
