@@ -6,27 +6,16 @@ import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import Typography from "@mui/material/Typography";
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import InboxIcon from '@mui/icons-material/MoveToInbox';
 import MailIcon from '@mui/icons-material/Mail';
-import Avatar from '@mui/material/Avatar';
 import CssBaseline from '@mui/material/CssBaseline';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import ListItemText from '@mui/material/ListItemText';
-import {Drawer, useMediaQuery} from "@mui/material";
-import {styled, alpha, useTheme} from '@mui/material/styles';
-import InputBase from '@mui/material/InputBase';
+import {useMediaQuery} from "@mui/material";
+import {useTheme} from '@mui/material/styles';
 import Badge from '@mui/material/Badge';
-import MenuItem from '@mui/material/MenuItem';
-import Menu from '@mui/material/Menu';
-import SearchIcon from '@mui/icons-material/Search';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import MoreIcon from '@mui/icons-material/MoreVert';
 import {useAppSelector} from '../hooks/hooks';
 import {auth} from '../redux/auth';
-import logo from '../logo.png';
 import LeftDrawer from "../components/dashboard/LeftDrawer";
 import MyAppBarSearch from "../components/dashboard/MyAppBarSearch";
 
@@ -43,7 +32,7 @@ const Dashboard = () => {
     const [drawerVariant, setDrawerVariant] = useState(variant);
 
     useEffect(() => {
-        variant = upMd ? 'permanent' : 'temporary';
+        const variant = upMd ? 'permanent' : 'temporary';
         setOpen(upMd);
         // @ts-ignore
         setDrawerVariant(variant);
@@ -62,10 +51,10 @@ const Dashboard = () => {
 
     return (
         <Box sx={{display: 'flex'}} ref={ref}>
-            <CssBaseline />
+            <CssBaseline/>
             <AppBar
                 color='default'
-                position="fixed"
+                position='fixed'
                 enableColorOnDark={true}
                 sx={{
                     backgroundColor: 'primary.main',
@@ -77,58 +66,58 @@ const Dashboard = () => {
             >
                 <Toolbar>
                     <IconButton
-                        size="large"
-                        edge="start"
-                        color="inherit"
-                        aria-label="open drawer"
+                        size='large'
+                        edge='start'
+                        color='inherit'
+                        aria-label='open drawer'
                         onClick={handleDrawerOpen}
                         sx={{mr: 2}}
                     >
-                        <MenuIcon />
+                        <MenuIcon/>
                     </IconButton>
                     <Typography
-                        variant="h6"
+                        variant='h6'
                         noWrap
-                        component="div"
+                        component='div'
                         sx={{display: {xs: 'none', sm: 'block'}}}
                     >
                         Material App
                     </Typography>
-                    <MyAppBarSearch />
-                    <Box sx={{flexGrow: 1}} />
+                    <MyAppBarSearch/>
+                    <Box sx={{flexGrow: 1}}/>
                     <Box sx={{display: {xs: 'none', md: 'flex'}}}>
-                        <IconButton size="large" aria-label="show 4 new mails" color="inherit">
-                            <Badge badgeContent={4} color="error">
-                                <MailIcon />
+                        <IconButton size='large' aria-label='show 4 new mails' color='inherit'>
+                            <Badge badgeContent={4} color='error'>
+                                <MailIcon/>
                             </Badge>
                         </IconButton>
                         <IconButton
-                            size="large"
-                            aria-label="show 17 new notifications"
-                            color="inherit"
+                            size='large'
+                            aria-label='show 17 new notifications'
+                            color='inherit'
                         >
-                            <Badge badgeContent={17} color="error">
-                                <NotificationsIcon />
+                            <Badge badgeContent={17} color='error'>
+                                <NotificationsIcon/>
                             </Badge>
                         </IconButton>
                         <IconButton
-                            size="large"
-                            edge="end"
-                            aria-label="account of current user"
-                            aria-haspopup="true"
-                            color="inherit"
+                            size='large'
+                            edge='end'
+                            aria-label='account of current user'
+                            aria-haspopup='true'
+                            color='inherit'
                         >
-                            <AccountCircle />
+                            <AccountCircle/>
                         </IconButton>
                     </Box>
                     <Box sx={{display: {xs: 'flex', md: 'none'}}}>
                         <IconButton
-                            size="large"
-                            aria-label="show more"
-                            aria-haspopup="true"
-                            color="inherit"
+                            size='large'
+                            aria-label='show more'
+                            aria-haspopup='true'
+                            color='inherit'
                         >
-                            <MoreIcon />
+                            <MoreIcon/>
                         </IconButton>
                     </Box>
                 </Toolbar>
@@ -142,15 +131,15 @@ const Dashboard = () => {
                 drawerWidth={drawerWidth}
             />
             <Box
-                component="main"
+                component='main'
                 sx={{flexGrow: 1, p: 3, width: {md: `calc(100% - ${drawerWidth}px)`}}}
             >
-                <Toolbar />
+                <Toolbar/>
                 <Switch>
-                    <Route path="/dashboard/">
+                    <Route path='/dashboard/'>
                         over view
                     </Route>
-                    <Route path="/dashboard/users/">
+                    <Route path='/dashboard/users/'>
                         users
                     </Route>
                 </Switch>

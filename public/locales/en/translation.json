@@ -12,7 +12,9 @@
     "phoneHelperNull": "Phone number can not be bull",
     "pwdHelperLength": "Password length must > 6",
     "pwdHelperPattern": "Password must contains letters and math",
-    "pwdHelperNull": "Password can not be null"
+    "pwdHelperNull": "Password can not be null",
+    "accountError": "Account or password error",
+    "netError": "Network error"
   },
   "fabSettings": {
     "settings": "Settings",

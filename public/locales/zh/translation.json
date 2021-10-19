@@ -12,7 +12,9 @@
     "phoneHelperNull": "手机号不能为空",
     "pwdHelperLength": "密码长度必须大于6",
     "pwdHelperPattern": "密码必须同时包含字母和数字",
-    "pwdHelperNull": "密码不能为空"
+    "pwdHelperNull": "密码不能为空",
+    "accountError": "账户或密码错误",
+    "netError": "网络错误"
   },
   "fabSettings": {
     "settings": "设置",
