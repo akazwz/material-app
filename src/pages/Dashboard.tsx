@@ -15,7 +15,7 @@ import CssBaseline from '@mui/material/CssBaseline';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import {Drawer, useMediaQuery} from "@mui/material";
-import {styled, useTheme} from '@mui/material/styles';
+import {styled, alpha, useTheme} from '@mui/material/styles';
 import InputBase from '@mui/material/InputBase';
 import Badge from '@mui/material/Badge';
 import MenuItem from '@mui/material/MenuItem';
@@ -67,6 +67,49 @@ const Dashboard = () => {
         backgroundColor: theme.palette.primary.main,
     }));
 
+    const Search = styled('div')(({theme}) => ({
+        position: 'relative',
+        borderRadius: theme.shape.borderRadius,
+        backgroundColor: alpha(theme.palette.common.white, 0.15),
+        '&:hover': {
+            backgroundColor: alpha(theme.palette.common.white, 0.25),
+        },
+        marginLeft: 0,
+        width: '100%',
+        [theme.breakpoints.up('sm')]: {
+            marginLeft: theme.spacing(1),
+            width: 'auto',
+        },
+    }));
+
+    const SearchIconWrapper = styled('div')(({theme}) => ({
+        padding: theme.spacing(0, 2),
+        height: '100%',
+        position: 'absolute',
+        pointerEvents: 'none',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+    }));
+
+    const StyledInputBase = styled(InputBase)(({theme}) => ({
+        color: 'inherit',
+        '& .MuiInputBase-input': {
+            padding: theme.spacing(1, 1, 1, 0),
+            // vertical padding + font size from searchIcon
+            paddingLeft: `calc(1em + ${theme.spacing(4)})`,
+            transition: theme.transitions.create('width'),
+            width: '100%',
+            [theme.breakpoints.up('sm')]: {
+                width: '12ch',
+                '&:focus': {
+                    width: '20ch',
+                },
+            },
+        },
+    }));
+
+
     return (
         <Box sx={{display: 'flex'}} ref={ref}>
             <CssBaseline />
@@ -89,7 +132,7 @@ const Dashboard = () => {
                         color="inherit"
                         aria-label="open drawer"
                         onClick={handleDrawerOpen}
-                        sx={{ mr: 2 }}
+                        sx={{mr: 2}}
                     >
                         <MenuIcon />
                     </IconButton>
@@ -97,12 +140,21 @@ const Dashboard = () => {
                         variant="h6"
                         noWrap
                         component="div"
-                        sx={{ display: { xs: 'none', sm: 'block' } }}
+                        sx={{display: {xs: 'none', sm: 'block'}}}
                     >
-                        MUI
+                        Material App
                     </Typography>
-                    <Box sx={{ flexGrow: 1 }} />
-                    <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
+                    <Search>
+                        <SearchIconWrapper>
+                            <SearchIcon />
+                        </SearchIconWrapper>
+                        <StyledInputBase
+                            placeholder="Search…"
+                            inputProps={{'aria-label': 'search'}}
+                        />
+                    </Search>
+                    <Box sx={{flexGrow: 1}} />
+                    <Box sx={{display: {xs: 'none', md: 'flex'}}}>
                         <IconButton size="large" aria-label="show 4 new mails" color="inherit">
                             <Badge badgeContent={4} color="error">
                                 <MailIcon />
@@ -127,7 +179,7 @@ const Dashboard = () => {
                             <AccountCircle />
                         </IconButton>
                     </Box>
-                    <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
+                    <Box sx={{display: {xs: 'flex', md: 'none'}}}>
                         <IconButton
                             size="large"
                             aria-label="show more"
