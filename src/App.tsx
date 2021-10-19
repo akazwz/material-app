@@ -1,5 +1,5 @@
 import React, {Suspense} from 'react';
-import {Switch, Route} from 'react-router-dom';
+import {Switch, Route, Redirect} from 'react-router-dom';
 import {FullScreen, useFullScreenHandle} from 'react-full-screen';
 import Backdrop from '@mui/material/Backdrop/Backdrop';
 import CircularProgress from '@mui/material/CircularProgress/CircularProgress';
@@ -10,6 +10,7 @@ import FabSettings from './pages/FabSettings';
 import {theme} from './redux/theme';
 import Dashboard from './pages/Dashboard';
 import './App.css';
+import {auth} from "./redux/auth";
 
 function App() {
     const themeValue = useAppSelector(theme);
@@ -50,8 +51,11 @@ function App() {
                             <Route path="/sign-in">
                                 <SignInSide />
                             </Route>
-                            <Route path="/">
+                            <Route path="/dashboard">
                                 <Dashboard />
+                            </Route>
+                            <Route path="/">
+                                <Redirect to="/dashboard" />
                             </Route>
                         </Switch>
                         <FabSettings
