@@ -4,7 +4,7 @@ import {Redirect} from "react-router-dom";
 
 const HomePage = () => {
     let authValue = useAuth();
-    let to = authValue.auth.token !== 'token' ? '/dashboard' : 'sign-in';
+    let to = authValue.auth.user.username !== '' ? '/dashboard' : '/sign-in';
 
     return (
         <>

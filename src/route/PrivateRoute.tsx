@@ -7,10 +7,10 @@ const PrivateRoute = (rest: any, children: ChildNode) => {
     return (
         <Route
             {...rest}
-            render={authValue.auth.token ? (
+            render={authValue.auth.user.username ? (
                 children
             ) : (
-                <Redirect to="/sign-in" />
+                <Redirect to='/sign-in'/>
             )}
         />
     );
