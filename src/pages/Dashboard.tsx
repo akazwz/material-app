@@ -27,6 +27,8 @@ import MoreIcon from '@mui/icons-material/MoreVert';
 import {useAppSelector} from '../hooks/hooks';
 import {auth} from '../redux/auth';
 import logo from '../logo.png';
+import LeftDrawer from "../components/dashboard/LeftDrawer";
+import MyAppBarSearch from "../components/dashboard/MyAppBarSearch";
 
 const drawerWidth = 240;
 
@@ -57,58 +59,6 @@ const Dashboard = () => {
         setDrawerVariant(variant);
         setOpen(false);
     };
-
-    const DrawerHeader = styled('div')(() => ({
-        display: 'flex',
-        alignItems: 'center',
-        padding: theme.spacing(0, 0),
-        ...theme.mixins.toolbar,
-        justifyContent: 'center',
-        backgroundColor: theme.palette.primary.main,
-    }));
-
-    const Search = styled('div')(({theme}) => ({
-        position: 'relative',
-        borderRadius: theme.shape.borderRadius,
-        backgroundColor: alpha(theme.palette.common.white, 0.15),
-        '&:hover': {
-            backgroundColor: alpha(theme.palette.common.white, 0.25),
-        },
-        marginLeft: 0,
-        width: '100%',
-        [theme.breakpoints.up('sm')]: {
-            marginLeft: theme.spacing(1),
-            width: 'auto',
-        },
-    }));
-
-    const SearchIconWrapper = styled('div')(({theme}) => ({
-        padding: theme.spacing(0, 2),
-        height: '100%',
-        position: 'absolute',
-        pointerEvents: 'none',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-    }));
-
-    const StyledInputBase = styled(InputBase)(({theme}) => ({
-        color: 'inherit',
-        '& .MuiInputBase-input': {
-            padding: theme.spacing(1, 1, 1, 0),
-            // vertical padding + font size from searchIcon
-            paddingLeft: `calc(1em + ${theme.spacing(4)})`,
-            transition: theme.transitions.create('width'),
-            width: '100%',
-            [theme.breakpoints.up('sm')]: {
-                width: '12ch',
-                '&:focus': {
-                    width: '20ch',
-                },
-            },
-        },
-    }));
-
 
     return (
         <Box sx={{display: 'flex'}} ref={ref}>
@@ -144,15 +94,7 @@ const Dashboard = () => {
                     >
                         Material App
                     </Typography>
-                    <Search>
-                        <SearchIconWrapper>
-                            <SearchIcon />
-                        </SearchIconWrapper>
-                        <StyledInputBase
-                            placeholder="Search…"
-                            inputProps={{'aria-label': 'search'}}
-                        />
-                    </Search>
+                    <MyAppBarSearch />
                     <Box sx={{flexGrow: 1}} />
                     <Box sx={{display: {xs: 'none', md: 'flex'}}}>
                         <IconButton size="large" aria-label="show 4 new mails" color="inherit">
@@ -191,38 +133,14 @@ const Dashboard = () => {
                     </Box>
                 </Toolbar>
             </AppBar>
-            <Drawer
+            <LeftDrawer
                 container={ref.current}
                 variant={drawerVariant}
-                anchor="left"
                 open={open}
                 onClose={upMd ? undefined : handleDrawerClose}
-                ModalProps={{
-                    keepMounted: !upMd, // Better open performance on mobile.
-                }}
-                sx={{
-                    width: drawerWidth,
-                    flexShrink: 0,
-                    '& .MuiDrawer-paper': {boxSizing: 'border-box', width: drawerWidth},
-                }}
-            >
-                <DrawerHeader>
-                    <Avatar alt="log" src={logo} sx={{width: 48, height: 48}} />
-                    <Typography>
-                        Material App
-                    </Typography>
-                </DrawerHeader>
-                <List sx={{width: '100%'}}>
-                    {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-                        <ListItem button key={text} sx={{width: '100%'}}>
-                            <ListItemIcon>
-                                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-                            </ListItemIcon>
-                            <ListItemText primary={text} />
-                        </ListItem>
-                    ))}
-                </List>
-            </Drawer>
+                keepMounted={!upMd}
+                drawerWidth={drawerWidth}
+            />
             <Box
                 component="main"
                 sx={{flexGrow: 1, p: 3, width: {md: `calc(100% - ${drawerWidth}px)`}}}

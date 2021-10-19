@@ -52,7 +52,7 @@ function App() {
                             <Route path="/sign-in">
                                 <SignInSide />
                             </Route>
-                            <PrivateRoute path="/dashboard">
+                            <PrivateRoute path="/dashboard/">
                                 <Dashboard />
                             </PrivateRoute>
                         </Switch>
