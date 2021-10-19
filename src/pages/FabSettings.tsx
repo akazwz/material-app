@@ -74,7 +74,7 @@ const FabSettings = (props: any) => {
 
     const handleSecondColorInputOnChange = (value: string) => {
         setSecondColor(value);
-        if (value.length === 7) {
+        if (value.length === 4 || value.length === 7) {
             dispatch(setThemeSecondColor(value));
             localStorage.setItem('secondColor', value);
         }
