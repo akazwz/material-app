@@ -1,4 +1,5 @@
 import React from 'react';
+import {useHistory} from 'react-router-dom';
 import Avatar from '@mui/material/Avatar';
 import MenuItem from '@mui/material/MenuItem';
 import Divider from '@mui/material/Divider';
@@ -9,13 +10,13 @@ import Menu from '@mui/material/Menu';
 import ListItemIcon from '@mui/material/ListItemIcon';
 
 const AccountMenu = (props: any) => {
-    const {open, anchorEl, handleOnClose, handleOnClick} = props;
+    let history = useHistory();
+    const {open, anchorEl, handleOnClose} = props;
     return (
         <Menu
             anchorEl={anchorEl}
             open={open}
             onClose={handleOnClose}
-            onClick={handleOnClick}
             PaperProps={{
                 elevation: 0,
                 sx: {
@@ -64,7 +65,10 @@ const AccountMenu = (props: any) => {
                 </ListItemIcon>
                 Settings
             </MenuItem>
-            <MenuItem>
+            <MenuItem onClick={() => {
+                localStorage.removeItem('user');
+                history.push('/sign-in');
+            }}>
                 <ListItemIcon>
                     <Logout fontSize="small" />
                 </ListItemIcon>

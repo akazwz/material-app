@@ -8,18 +8,20 @@ import IconButton from '@mui/material/IconButton/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import Typography from "@mui/material/Typography";
 import MailIcon from '@mui/icons-material/Mail';
+import Badge from '@mui/material/Badge';
+import NotificationsIcon from '@mui/icons-material/Notifications';
+import MoreIcon from '@mui/icons-material/MoreVert';
+import Tooltip from '@mui/material/Tooltip';
 import CssBaseline from '@mui/material/CssBaseline';
 import {useMediaQuery} from "@mui/material";
 import {useTheme} from '@mui/material/styles';
-import Badge from '@mui/material/Badge';
-import Tooltip from '@mui/material/Tooltip';
-import NotificationsIcon from '@mui/icons-material/Notifications';
-import MoreIcon from '@mui/icons-material/MoreVert';
 import {useAppSelector} from '../hooks/hooks';
 import {auth} from '../redux/auth';
-import LeftDrawer from "../components/dashboard/LeftDrawer";
-import MyAppBarSearch from "../components/dashboard/MyAppBarSearch";
-import AccountMenu from "../components/dashboard/AccountMenu";
+import LeftDrawer from '../components/dashboard/LeftDrawer';
+import MyAppBarSearch from '../components/dashboard/MyAppBarSearch';
+import AccountMenu from '../components/dashboard/AccountMenu';
+import MoreMenu from '../components/dashboard/MoreMenu';
+import PrivateRoute from "../route/PrivateRoute";
 
 const drawerWidth = 240;
 
@@ -33,14 +35,24 @@ const Dashboard = () => {
     variant = 'temporary';
     const [drawerVariant, setDrawerVariant] = useState(variant);
     const [anchorElAccountMenu, setAnchorElAccountMenu] = React.useState<null | HTMLElement>(null);
+    const [anchorElMoreMenu, setAnchorElMoreMenu] = React.useState<null | HTMLElement>(null);
     const accountMenuOpen = Boolean(anchorElAccountMenu);
+    const moreMenuOpen = Boolean(anchorElMoreMenu);
 
     const handleAvatarClick = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorElAccountMenu(event.currentTarget);
     };
 
+    const handleMoreClick = (event: React.MouseEvent<HTMLElement>) => {
+        setAnchorElMoreMenu(event.currentTarget);
+    };
+
     const handleAccountMenuClose = () => {
         setAnchorElAccountMenu(null);
+    };
+
+    const handleAccountMenuClick = (event: React.MouseEvent<HTMLElement>) => {
+        console.log(event);
     };
 
     useEffect(() => {
@@ -95,10 +107,16 @@ const Dashboard = () => {
                     >
                         {authValue.auth.user.username}
                     </Typography>
-                    <MyAppBarSearch />
+                    <Box sx={{display: {xs: 'none', sm: 'block'}}}>
+                        <MyAppBarSearch />
+                    </Box>
                     <Box sx={{flexGrow: 1}} />
                     <Box sx={{display: {xs: 'none', md: 'flex'}}}>
-                        <IconButton size='large' aria-label='show 4 new mails' color='inherit'>
+                        <IconButton
+                            size='large'
+                            aria-label='show 4 new mails'
+                            color='inherit'
+                        >
                             <Badge badgeContent={4} color='error'>
                                 <MailIcon />
                             </Badge>
@@ -112,6 +130,8 @@ const Dashboard = () => {
                                 <NotificationsIcon />
                             </Badge>
                         </IconButton>
+                    </Box>
+                    <Box>
                         <Tooltip title="Account settings">
                             <IconButton
                                 size='large'
@@ -134,6 +154,7 @@ const Dashboard = () => {
                             aria-label='show more'
                             aria-haspopup='true'
                             color='inherit'
+                            onClick={handleMoreClick}
                         >
                             <MoreIcon />
                         </IconButton>
@@ -143,7 +164,11 @@ const Dashboard = () => {
                     open={accountMenuOpen}
                     anchorEl={anchorElAccountMenu}
                     handleOnClose={handleAccountMenuClose}
-                    handleOnClick={handleAccountMenuClose}
+                />
+                <MoreMenu
+                    open={moreMenuOpen}
+                    anchorEl={anchorElMoreMenu}
+                    handleOnClose={() => setAnchorElMoreMenu(null)}
                 />
             </AppBar>
             <LeftDrawer
@@ -160,17 +185,16 @@ const Dashboard = () => {
             >
                 <Toolbar />
                 <Switch>
-                    <Route path='/dashboard/'>
-                        over view
-                    </Route>
-                    <Route path='/dashboard/users/'>
+                    <PrivateRoute path='/dashboard/users'>
                         users
-                    </Route>
+                    </PrivateRoute>
+                    <PrivateRoute path='/dashboard'>
+                        <Box>overview</Box>
+                    </PrivateRoute>
                 </Switch>
             </Box>
         </Box>
-    )
-        ;
+    );
 };
 
 export default Dashboard;

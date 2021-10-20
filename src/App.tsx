@@ -42,22 +42,16 @@ function App() {
             <Backdrop
                 open={true}
             >
-                <CircularProgress color='inherit'/>
+                <CircularProgress color='inherit' />
             </Backdrop>
         }>
             <ThemeProvider theme={themeCustom}>
                 <React.Fragment>
                     <FullScreen handle={handle}>
                         <Switch>
-                            <Route path='/sign-in'>
-                                <SignInSide/>
-                            </Route>
-                            <PrivateRoute path='/dashboard/'>
-                                <Dashboard/>
-                            </PrivateRoute>
-                            <Route path='/'>
-                                <HomePage/>
-                            </Route>
+                            <PrivateRoute path='/dashboard' component={Dashboard} />
+                            <Route path='/sign-in' component={SignInSide} />
+                            <Route path='/' component={HomePage} />
                         </Switch>
                         <FabSettings
                             fullScreenEnter={handle.enter}

@@ -77,7 +77,7 @@ const SignInSide = () => {
                     setAlertOpen(true);
                     return;
                 }
-                let userLocal : UserI;
+                let userLocal: UserI;
                 userLocal = {
                     headerImg: header_img,
                     nickname: nick_name,
@@ -92,16 +92,18 @@ const SignInSide = () => {
                 history.push('/dashboard');
             })
             .catch((err: any) => {
-                const {code} = err.response.data;
-                if (code === 4003) {
-                    setAlertType('account');
-                    setAlertOpen(true);
+                if (err.response !== undefined) {
+                    const {code} = err.response?.data;
+                    if (code === 4003) {
+                        setAlertType('account');
+                        setAlertOpen(true);
+                    }
                 } else {
                     setAlertType('net');
                     setAlertOpen(true);
                 }
                 setLoading(false);
-            })
+            });
     };
 
     // phone on blur
@@ -201,9 +203,9 @@ const SignInSide = () => {
     return (
         <Grid container component='main' sx={{height: '100vh'}}>
 
-            <CssBaseline/>
+            <CssBaseline />
             {/*side image*/}
-            <GridImg url='https://source.unsplash.com/random'/>
+            <GridImg url='https://source.unsplash.com/random' />
             <Grid
                 item
                 xs={12}
@@ -234,7 +236,7 @@ const SignInSide = () => {
                                         setAlertOpen(false);
                                     }}
                                 >
-                                    <CloseIcon fontSize='inherit'/>
+                                    <CloseIcon fontSize='inherit' />
                                 </IconButton>
                             }
                             sx={{mb: 2}}
@@ -243,7 +245,7 @@ const SignInSide = () => {
                         </Alert>
                     </Collapse>
                     <Avatar sx={{m: 1, bgcolor: 'secondary.main'}}>
-                        <LockOutlinedIcon/>
+                        <LockOutlinedIcon />
                     </Avatar>
                     <Typography component='h1' variant='h5'>
                         {t('signInSide.signIn')}
@@ -282,8 +284,8 @@ const SignInSide = () => {
                                         onClick={handleToggleShowPassword}
                                         onMouseDown={handleMouseDownPassword}
                                     >
-                                        {password.length > 1 ? showPassword ? <VisibilityOff/> :
-                                            <VisibilityIcon/> : null}
+                                        {password.length > 1 ? showPassword ? <VisibilityOff /> :
+                                            <VisibilityIcon /> : null}
                                     </IconButton>
                                 </InputAdornment>,
                             }}
@@ -294,7 +296,7 @@ const SignInSide = () => {
                             onChange={handlePwdChange}
                         />
                         <FormControlLabel
-                            control={<Checkbox value='remember' color='primary'/>}
+                            control={<Checkbox value='remember' color='primary' />}
                             label={t('signInSide.rememberMe')}
                         />
                         <LoadingButton
@@ -302,7 +304,7 @@ const SignInSide = () => {
                             fullWidth
                             variant='contained'
                             loading={loading}
-                            loadingIndicator={<CircularProgress size={27}/>}
+                            loadingIndicator={<CircularProgress size={27} />}
                             sx={{mt: 3, mb: 2}}
                             disabled={submitDisabled}
                         >
@@ -320,7 +322,7 @@ const SignInSide = () => {
                                 </Link>
                             </Grid>
                         </Grid>
-                        <Copyright sx={{mt: 5}}/>
+                        <Copyright sx={{mt: 5}} />
                     </Box>
                 </Box>
             </Grid>
