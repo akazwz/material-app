@@ -1,6 +1,7 @@
 import React, {useEffect, useRef, useState} from 'react';
 import {Route, Switch} from 'react-router-dom';
 import Box from '@mui/material/Box';
+import Avatar from '@mui/material/Avatar';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton/IconButton';
@@ -11,13 +12,14 @@ import CssBaseline from '@mui/material/CssBaseline';
 import {useMediaQuery} from "@mui/material";
 import {useTheme} from '@mui/material/styles';
 import Badge from '@mui/material/Badge';
-import AccountCircle from '@mui/icons-material/AccountCircle';
+import Tooltip from '@mui/material/Tooltip';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import MoreIcon from '@mui/icons-material/MoreVert';
 import {useAppSelector} from '../hooks/hooks';
 import {auth} from '../redux/auth';
 import LeftDrawer from "../components/dashboard/LeftDrawer";
 import MyAppBarSearch from "../components/dashboard/MyAppBarSearch";
+import AccountMenu from "../components/dashboard/AccountMenu";
 
 const drawerWidth = 240;
 
@@ -30,6 +32,16 @@ const Dashboard = () => {
     let variant: 'temporary' | 'permanent';
     variant = 'temporary';
     const [drawerVariant, setDrawerVariant] = useState(variant);
+    const [anchorElAccountMenu, setAnchorElAccountMenu] = React.useState<null | HTMLElement>(null);
+    const accountMenuOpen = Boolean(anchorElAccountMenu);
+
+    const handleAvatarClick = (event: React.MouseEvent<HTMLElement>) => {
+        setAnchorElAccountMenu(event.currentTarget);
+    };
+
+    const handleAccountMenuClose = () => {
+        setAnchorElAccountMenu(null);
+    };
 
     useEffect(() => {
         const variant = upMd ? 'permanent' : 'temporary';
@@ -51,7 +63,7 @@ const Dashboard = () => {
 
     return (
         <Box sx={{display: 'flex'}} ref={ref}>
-            <CssBaseline/>
+            <CssBaseline />
             <AppBar
                 color='default'
                 position='fixed'
@@ -73,7 +85,7 @@ const Dashboard = () => {
                         onClick={handleDrawerOpen}
                         sx={{mr: 2}}
                     >
-                        <MenuIcon/>
+                        <MenuIcon />
                     </IconButton>
                     <Typography
                         variant='h6'
@@ -83,12 +95,12 @@ const Dashboard = () => {
                     >
                         {authValue.auth.user.username}
                     </Typography>
-                    <MyAppBarSearch/>
-                    <Box sx={{flexGrow: 1}}/>
+                    <MyAppBarSearch />
+                    <Box sx={{flexGrow: 1}} />
                     <Box sx={{display: {xs: 'none', md: 'flex'}}}>
                         <IconButton size='large' aria-label='show 4 new mails' color='inherit'>
                             <Badge badgeContent={4} color='error'>
-                                <MailIcon/>
+                                <MailIcon />
                             </Badge>
                         </IconButton>
                         <IconButton
@@ -97,18 +109,24 @@ const Dashboard = () => {
                             color='inherit'
                         >
                             <Badge badgeContent={17} color='error'>
-                                <NotificationsIcon/>
+                                <NotificationsIcon />
                             </Badge>
                         </IconButton>
-                        <IconButton
-                            size='large'
-                            edge='end'
-                            aria-label='account of current user'
-                            aria-haspopup='true'
-                            color='inherit'
-                        >
-                            <AccountCircle/>
-                        </IconButton>
+                        <Tooltip title="Account settings">
+                            <IconButton
+                                size='large'
+                                edge='end'
+                                aria-label='account of current user'
+                                aria-haspopup='true'
+                                color='inherit'
+                                onClick={handleAvatarClick}
+                            >
+                                <Avatar
+                                    src={authValue.auth.user.headerImg}
+                                    sx={{width: 32, height: 32}}
+                                />
+                            </IconButton>
+                        </Tooltip>
                     </Box>
                     <Box sx={{display: {xs: 'flex', md: 'none'}}}>
                         <IconButton
@@ -117,10 +135,16 @@ const Dashboard = () => {
                             aria-haspopup='true'
                             color='inherit'
                         >
-                            <MoreIcon/>
+                            <MoreIcon />
                         </IconButton>
                     </Box>
                 </Toolbar>
+                <AccountMenu
+                    open={accountMenuOpen}
+                    anchorEl={anchorElAccountMenu}
+                    handleOnClose={handleAccountMenuClose}
+                    handleOnClick={handleAccountMenuClose}
+                />
             </AppBar>
             <LeftDrawer
                 container={ref.current}
@@ -134,7 +158,7 @@ const Dashboard = () => {
                 component='main'
                 sx={{flexGrow: 1, p: 3, width: {md: `calc(100% - ${drawerWidth}px)`}}}
             >
-                <Toolbar/>
+                <Toolbar />
                 <Switch>
                     <Route path='/dashboard/'>
                         over view
