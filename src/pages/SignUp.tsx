@@ -7,7 +7,7 @@ import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-import {useHistory} from 'react-router-dom';
+import {Link as RouterLink, useHistory} from 'react-router-dom';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
 import FormControlLabel from '@mui/material/FormControlLabel';
@@ -68,7 +68,6 @@ const SignUp = () => {
             setCodeBtnDisabled(true);
             setBtnValue(`${time} seconds resend`);
         } else {
-            clearTimeout(timer);
             setCodeBtnDisabled(false);
             setTime(60);
             setBtnValue('Get Code');
@@ -205,8 +204,8 @@ const SignUp = () => {
                     </Button>
                     <Grid container justifyContent='flex-end'>
                         <Grid item>
-                            <Link href='#' variant='body2'>
-                                Already have an account? Sign in
+                            <Link component={RouterLink} to='/sign-in'>
+                                go to sign in
                             </Link>
                         </Grid>
                     </Grid>
