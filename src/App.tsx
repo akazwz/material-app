@@ -5,13 +5,14 @@ import Backdrop from '@mui/material/Backdrop/Backdrop';
 import CircularProgress from '@mui/material/CircularProgress/CircularProgress';
 import {createTheme, ThemeProvider} from '@mui/material/styles';
 import {useAppSelector} from './hooks/hooks';
-import SignInSide from './pages/SighInSide';
+import SignInSide from './pages/SignInSide';
 import FabSettings from './pages/FabSettings';
 import {theme} from './redux/theme';
 import Dashboard from './pages/Dashboard';
 import PrivateRoute from './route/PrivateRoute';
 import HomePage from './pages/HomePage';
 import './App.css';
+import SignUp from "./pages/SignUp";
 
 function App() {
     const themeValue = useAppSelector(theme);
@@ -51,6 +52,7 @@ function App() {
                         <Switch>
                             <PrivateRoute path='/dashboard' component={Dashboard} />
                             <Route path='/sign-in' component={SignInSide} />
+                            <Route path='/sign-up' component={SignUp} />
                             <Route path='/' component={HomePage} />
                         </Switch>
                         <FabSettings

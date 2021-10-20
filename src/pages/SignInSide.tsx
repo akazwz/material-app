@@ -1,4 +1,7 @@
 import React, {useEffect, useState} from 'react';
+import {
+    Link as RouterLink,
+} from 'react-router-dom';
 import Link from '@mui/material/Link';
 import Paper from '@mui/material/Paper';
 import Box from '@mui/material/Box';
@@ -312,12 +315,12 @@ const SignInSide = () => {
                         </LoadingButton>
                         <Grid container>
                             <Grid item xs>
-                                <Link href='#' variant='body2'>
+                                <Link component={RouterLink} to="/#">
                                     {t('signInSide.forgotPwd')}
                                 </Link>
                             </Grid>
                             <Grid item>
-                                <Link href='#' variant='body2'>
+                                <Link component={RouterLink} to="/sign-up">
                                     {t('signInSide.toSignUp')}
                                 </Link>
                             </Grid>
