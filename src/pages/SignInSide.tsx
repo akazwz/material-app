@@ -10,6 +10,7 @@ import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import {useTheme} from '@mui/material/styles';
 import SignInByPhonePwd from '../components/signin/SignInByPhonePwd';
+import SignInByPhoneCode from "../components/signin/SignInByPhoneCode";
 
 interface TabPanelProps {
     children?: React.ReactNode;
@@ -108,7 +109,7 @@ const SignInSide = () => {
                     onChangeIndex={handleChangeIndex}
                 >
                     <TabPanel value={value} index={0} dir={theme.direction}>
-                        <SignInByPhonePwd/>
+                        <SignInByPhoneCode/>
                     </TabPanel>
                     <TabPanel value={value} index={1} dir={theme.direction}>
                         <SignInByPhonePwd/>
