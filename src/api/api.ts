@@ -3,8 +3,8 @@ import {AxiosRequestConfig} from "axios";
 const axios = require('axios').default;
 const baseUrl = 'https://api.hellozwz.com/v1';
 
-export async function signIn(data: any) {
-    return await axios.post(baseUrl + '/token', data);
+export async function signInByPhonePwd(data: any) {
+    return await axios.post(baseUrl + '/token/phone-pwd', data);
 }
 
 export async function getVerificationCode(phone: string) {

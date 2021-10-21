@@ -54,6 +54,9 @@ const SignUp = () => {
                     if (code === 4009) {
                         alert('code error');
                     }
+                    if (code === 4010) {
+                        alert('phone already exists');
+                    }
                 }
             });
     };
