@@ -1,16 +1,11 @@
-import React from 'react';
-import {useAuth} from "../hooks/hooks";
-import {Redirect} from "react-router-dom";
+import React from 'react'
+import { Navigate } from 'react-router-dom'
 
 const HomePage = () => {
-    let authValue = useAuth();
-    let to = authValue.auth.user.username !== '' ? '/dashboard' : '/sign-in';
+  let authed = true
+  let to = authed ? '/dashboard' : '/sign-in'
 
-    return (
-        <>
-            <Redirect to={to}/>
-        </>
-    );
+  return (<Navigate to={to}/>)
 }
 
-export default HomePage;
+export default HomePage

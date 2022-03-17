@@ -1,26 +1,21 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import {BrowserRouter as Router} from 'react-router-dom';
-import {Provider} from 'react-redux';
-import {store} from "./redux/store";
-import App from './App';
-import reportWebVitals from './reportWebVitals';
-import './i18n';
-import './index.css';
-import '@fontsource/roboto/300.css';
-import '@fontsource/roboto/400.css';
-import '@fontsource/roboto/500.css';
-import '@fontsource/roboto/700.css';
+import React from 'react'
+import ReactDOM from 'react-dom'
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import App from './App'
+import reportWebVitals from './reportWebVitals'
+import './i18n'
+import HomePage from './pages/HomePage'
+import Dashboard from './pages/Dashboard'
+import SignInSide from './pages/SignInSide'
+import SignUp from './pages/SignUp'
 
 ReactDOM.render(
-    <React.StrictMode>
-        <Provider store={store}>
-            <Router>
-                <App />
-            </Router>
-        </Provider>
-    </React.StrictMode>,
-    document.getElementById('root')
-);
+  <React.StrictMode>
+    <BrowserRouter>
+      <App/>
+    </BrowserRouter>
+  </React.StrictMode>,
+  document.getElementById('root')
+)
 
-reportWebVitals();
+reportWebVitals()
