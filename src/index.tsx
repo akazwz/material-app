@@ -1,21 +1,19 @@
 import React from 'react'
-import ReactDOM from 'react-dom'
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { createRoot } from 'react-dom/client'
+import { BrowserRouter } from 'react-router-dom'
 import App from './App'
 import reportWebVitals from './reportWebVitals'
 import './i18n'
-import HomePage from './pages/HomePage'
-import Dashboard from './pages/Dashboard'
-import SignInSide from './pages/SignInSide'
-import SignUp from './pages/SignUp'
 
-ReactDOM.render(
+const container = document.getElementById('root')
+const root = createRoot(container!)
+
+root.render(
   <React.StrictMode>
     <BrowserRouter>
-      <App/>
+      <App />
     </BrowserRouter>
-  </React.StrictMode>,
-  document.getElementById('root')
+  </React.StrictMode>
 )
 
 reportWebVitals()
